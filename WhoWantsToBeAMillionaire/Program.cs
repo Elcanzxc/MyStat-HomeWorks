@@ -1,9 +1,11 @@
-﻿
-
-
-using System;
+﻿using System;
 using System.Media;
 using System.Threading.Channels;
+
+
+
+// Iznhacalno vse stroki bili na russkom yazike, perevod ot chatgpt ( na slucay esli budut oshibki v perevode)
+// prosto github chasto ruqaetsya na kiriliccu
 
 class Program
 {
@@ -16,46 +18,80 @@ class Program
     public static bool friendHelp = true;
     public static bool audienceHelp = true;
 
-
     public static string[] questions = new string[questionCount]
     {
-        "Какого цвета трава летом?",
-        "Сколько будет 2 + 2?",
-        "Какая планета ближе всего к Солнцу?",
-        "Кто написал роман «Преступление и наказание»?",
-        "Какая страна самая большая по площади?",
-        "Как называется химический элемент с символом «Au»?",
-        "Кто первым вышел в открытый космос?",
-        "В каком году распался Советский Союз?",
-        "Какой элемент назван в честь планеты?",
-        "Кто автор картины «Тайная вечеря»?",
+        "What color is grass in summer?",
+        "What is 2 + 2?",
+        "Which planet is closest to the Sun?",
+        "Who wrote the novel 'Crime and Punishment'?",
+        "Which country is the largest by area?",
+        "What is the chemical element with the symbol 'Au'?",
+        "Who was the first to go on a spacewalk?",
+        "In which year did the Soviet Union collapse?",
+        "Which element is named after a planet?",
+        "Who is the author of the painting 'The Last Supper'?",
     };
 
     public static string[,] questionAnswers = new string[questionCount, questionAnswersCount]
     {
-       { "Жёлтая", "Синяя", "Красная", "Зелёная" },
+       { "Yellow", "Blue", "Red", "Green" },
        { "5", "4", "3", "6" },
-       { "Земля", "Венера", "Меркурий", "Марс" },
-       { "Фёдор Достоевский", "Лев Толстой", "Антон Чехов", "Николай Гоголь" },
-       { "Россия", "США", "Канада", "Китай" },
-       { "Серебро", "Золото", "Железо", "Медь" },
-       { "Нил Армстронг", "Юрий Гагарин", "Алексей Леонов", "Герман Титов" },
+       { "Earth", "Venus", "Mercury", "Mars" },
+       { "Fyodor Dostoevsky", "Leo Tolstoy", "Anton Chekhov", "Nikolai Gogol" },
+       { "Russia", "USA", "Canada", "China" },
+       { "Silver", "Gold", "Iron", "Copper" },
+       { "Neil Armstrong", "Yuri Gagarin", "Alexei Leonov", "Gherman Titov" },
        { "1990", "1989", "1991", "1992" },
-       { "Водород", "Неон", "Гелий", "Уран" },
-       { "Рафаэль", "Леонардо да Винчи", "Микеланджело", "Донателло" }
+       { "Hydrogen", "Neon", "Helium", "Uranium" },
+       { "Raphael", "Leonardo da Vinci", "Michelangelo", "Donatello" }
     };
 
     public static int[] questionCorrectAnswersIndex = new int[questionCount]
     {
-        4,2,3,1,1,2,3,3,4,2
+        4, 2, 3, 1, 1, 2, 3, 3, 4, 2
     };
 
     public static int[] questionRewards = new int[questionCount]
     {
-       500 , 2_000, 10_000, 25_000,50_000,100_000, 400_000,800_000,1_500_000,3_000_000
+       500 , 2_000, 10_000, 25_000, 50_000, 100_000, 400_000, 800_000, 1_500_000, 3_000_000
     };
 
+    public static void StartMenu()
+    {
+        Console.WriteLine("Welcome to the Who Wants to Be a Millionaire game!");
+        Console.WriteLine("You will have 3 lifelines (50/50, audience help, friend help)");
+        Console.WriteLine("To open lifelines during the game press the letter 'H'");
+        Console.WriteLine("If you want to quit the game early press 'L'");
+        Console.WriteLine("If you are ready to play press 'Enter'");
+        Console.WriteLine("If you are not ready to play press any other key");
+    }
+    public static bool IsUserWantToPlay()
+    {
+        string enter = Console.ReadLine();
 
+        if (enter != "")
+            return false;
+
+        Console.WriteLine("So, the game has started! Good luck!");
+        return true;
+    }
+    public static void ImmutableSum(out int[] immutableSums)
+    {
+        Console.WriteLine("Choose your guaranteed sums (Example - 100_000): ");
+
+        immutableSums = new int[immutableSumCount];
+
+        for (int questionRewardsNumber = 0; questionRewardsNumber < questionCount; ++questionRewardsNumber)
+        {
+            Console.WriteLine($"{questionRewardsNumber + 1}) Question for {questionRewards[questionRewardsNumber]} rubles");
+        }
+
+        for (int immutableSumNumber = 0; immutableSumNumber < immutableSumCount; ++immutableSumNumber)
+        {
+            Console.Write($"{immutableSumNumber + 1}) Guaranteed sum: ");
+            immutableSums[immutableSumNumber] = Convert.ToInt32(Console.ReadLine());
+        }
+    }
 
     public static void ShowAllQuestions()
     {
@@ -87,14 +123,11 @@ class Program
         {
             Console.WriteLine($"{option}) {questionAnswers[i, j]}");
         }
-
     }
     public static void ShowQuestionAndAnswersByIndex(int indexOfQuestion)
     {
-
         ShowQuestionByIndex(indexOfQuestion);
         ShowAnswersByIndex(indexOfQuestion);
-
     }
     public static void ShowAllQuestionsAndAnswers()
     {
@@ -103,108 +136,97 @@ class Program
             ShowQuestionByIndex(i);
             ShowAnswersByIndex(i);
         }
-
-
     }
 
-
-
-    public static void StartMenu()
+    public static char InputAnswer()
     {
+        char inputUserAnswer = Convert.ToChar(Console.ReadLine());
 
+        char userAnswer;
 
-        Console.WriteLine("Добро пожаловать на игру кто хочет стать миллионером! ");
-        Console.WriteLine("У вас будет 4 подсказки ( 50\\50 , помощь зала, помощь друга)");
-        Console.WriteLine("Чтобы открыть подсказки во время игры нажмете Букву 'H' ");
-        Console.WriteLine("Если готовы играть нажмите 'Enter' ");
-
-
-        while (true)
+        while (!CheckCorrectCharInput(inputUserAnswer, out userAnswer))
         {
-            string enter = Console.ReadLine();
-            if (enter == "")
-            {
-                Console.WriteLine("И так игра началась удачи! ");
-                break;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Неверный ввод!");
-                Console.WriteLine("Если готовы играть нажмите 'Enter' ");
-
-            }
-
+            Console.WriteLine("Please enter a correct answer (A, B, C, D, H — lifeline, L — take money):");
+            inputUserAnswer = Convert.ToChar(Console.ReadLine());
         }
 
-
+        return userAnswer;
     }
+
+    public static bool CheckCorrectCharInput(char inputUserAnswer, out char userAnswer)
+    {
+        userAnswer = default;
+
+        if (char.IsWhiteSpace(inputUserAnswer))
+            return false;
+
+        char ch = char.ToUpper(inputUserAnswer);
+
+        if (!"ABCDHL".Contains(ch))
+            return false;
+
+        userAnswer = ch;
+        return true;
+    }
+
     public static int HintsMenu(int questionOrder, out char userAnswer)
     {
         userAnswer = default;
-        Console.WriteLine("Выберите какую подсказку хотите выбрать - ");
-        Console.WriteLine("1) 50\\50");
-        Console.WriteLine("2) Помощь зала");
-        Console.WriteLine("3) Помощь друга");
-        Console.WriteLine("4) Выйти из меню подсказок");
+        Console.WriteLine("Choose which lifeline you want to use - ");
+        Console.WriteLine("1) 50/50");
+        Console.WriteLine("2) Audience help");
+        Console.WriteLine("3) Friend help");
+        Console.WriteLine("4) Exit lifelines menu");
 
-        while (true) {
-
-        int inputHint = Convert.ToInt32(Console.ReadLine());
-
-        if(inputHint == 1)
+        while (true)
         {
-            if(fiftyFift == true)
+            int inputHint = Convert.ToInt32(Console.ReadLine());
+
+            if (inputHint == 1)
             {
-                FiftyFift(questionOrder);
-                fiftyFift = false;
+                if (fiftyFift == true)
+                {
+                    FiftyFift(questionOrder);
+                    fiftyFift = false;
                     break;
+                }
+                else
+                    Console.WriteLine("You have already used the 50/50 lifeline!");
             }
-            else
-                Console.WriteLine("Вы уже использвали подсказку - 50\\50!");
-        }
-
-        else if(inputHint == 2)
-        {
-            if (audienceHelp == true)
+            else if (inputHint == 2)
             {
-                AudienceHelp(questionOrder);
-                audienceHelp = false;
+                if (audienceHelp == true)
+                {
+                    AudienceHelp(questionOrder);
+                    audienceHelp = false;
                     break;
                 }
-            else
-                Console.WriteLine("Вы уже использвали подсказку - Помощь зала!");
-        }
-
-        else if(inputHint == 3)
-        {
-            if (friendHelp == true)
+                else
+                    Console.WriteLine("You have already used the Audience Help lifeline!");
+            }
+            else if (inputHint == 3)
             {
-                FriendHelp(questionOrder);
-                friendHelp = false;
+                if (friendHelp == true)
+                {
+                    FriendHelp(questionOrder);
+                    friendHelp = false;
                     break;
                 }
-            else
-                Console.WriteLine("Вы уже использвали подсказку - Помощь друга!");
-        }
-        else if(inputHint == 4)
-            { 
+                else
+                    Console.WriteLine("You have already used the Friend Help lifeline!");
+            }
+            else if (inputHint == 4)
+            {
                 return 1;
             }
-         else
+            else
             {
-                Console.WriteLine("Выберите диапозон от 1 до 4 (включительно) !");
+                Console.WriteLine("Please choose a number between 1 and 4 (inclusive)!");
             }
-
-
-            
-
         }
 
         userAnswer = InputAnswer();
         return 0;
-
-
     }
 
     public static void FiftyFift(int questionOrder)
@@ -214,14 +236,12 @@ class Program
         Random rnd = new Random();
 
         int random = questionCorrectAnswersIndex[questionOrder];
-         while (random == questionCorrectAnswersIndex[questionOrder])
+        while (random == questionCorrectAnswersIndex[questionOrder])
         {
             random = rnd.Next(1, 5);
             Console.WriteLine($"{(char)(64 + random)}) {questionAnswers[questionOrder, random - 1]}");
         }
         Console.WriteLine($"{(char)(64 + questionCorrectAnswersIndex[questionOrder])}) {questionAnswers[questionOrder, questionCorrectAnswersIndex[questionOrder] - 1]}");
-
-
     }
     public static void FriendHelp(int questionOrder)
     {
@@ -229,10 +249,9 @@ class Program
 
         int RightOrFalse = rnd.Next(1, 11);
 
-        Console.WriteLine("Друг думмает что правильный ответ это - ");
+        Console.WriteLine("Your friend thinks the correct answer is - ");
         if (RightOrFalse == 1)
         {
-      
             Random falseRnd = new Random();
             int random = questionCorrectAnswersIndex[questionOrder];
             while (random == questionCorrectAnswersIndex[questionOrder])
@@ -248,20 +267,16 @@ class Program
     }
     public static void AudienceHelp(int questionOrder)
     {
-        Console.WriteLine("Помощь зала распределила свои голоса следующим образом:");
+        Console.WriteLine("Audience distributed their votes as follows:");
 
         Random rnd = new Random();
 
-   
         int correctAnswerIndex = questionCorrectAnswersIndex[questionOrder] - 1;
 
-        
         int correctAnswerPercentage = rnd.Next(50, 81);
 
-        
         int remaining = 100 - correctAnswerPercentage;
 
-        
         int first = rnd.Next(0, remaining + 1);
         int second = rnd.Next(0, remaining - first + 1);
         int third = remaining - first - second;
@@ -269,7 +284,6 @@ class Program
         int[] distribution = new int[4];
         distribution[correctAnswerIndex] = correctAnswerPercentage;
 
-        
         int distIndex = 0;
         for (int i = 0; i < 4; i++)
         {
@@ -286,102 +300,38 @@ class Program
             distIndex++;
         }
 
-       
         for (int i = 0; i < 4; i++)
         {
             char option = (char)(65 + i);
             Console.WriteLine($"{distribution[i]}% - {option}) {questionAnswers[questionOrder, i]}");
         }
-    } // ** прочти
-
-
-
-    public static void ImmutableSum(out int[]  immutableSum)
-    {
-        immutableSum = new int[immutableSumCount];
-
-        Console.WriteLine("Выберите Несгораемую сумму (Пример - 100_000): ");
-        
-        for(int questionRewardsIndex = 0; questionRewardsIndex < questionCount; ++questionRewardsIndex)
-        {
-            Console.WriteLine($"{questionRewardsIndex+1}) Вопрос на {questionRewards[questionRewardsIndex]} рублей ");
-        }
-
-        
-
-        for(int i = 0; i < immutableSumCount; ++i)
-        {
-            Console.Write($"{i+1}) Несгораемая сумма: ");
-            immutableSum[i] = Convert.ToInt32(Console.ReadLine());
-        }
-       
-
     }
 
-
-
-    public static char InputAnswer()
-    {
-        string inputUser = Console.ReadLine();
-        char userAnswer;
-
-        while (!CheckCorrectCharInput(inputUser, out userAnswer))
-        {
-            Console.WriteLine("Пожалуйста, введите корректный ответ (A, B, C, D, H — подсказка, L — забрать деньги):");
-            inputUser = Console.ReadLine();
-        }
-
-        return userAnswer;
-    }
-
-    public static bool CheckUserAnswer(char userAnswer , int questionOrder, int[] immutableSum)
+    public static bool CheckUserAnswer(char userAnswer, int questionOrder, int[] immutableSum)
     {
         return CheckIsCorrectUserAnswer(userAnswer, questionOrder) ? true : false;
     }
-    public static bool CheckCorrectCharInput(string input, out char userInputAnswer)
+
+    public static bool CheckIsCorrectUserAnswer(char userAnswer, int questionOrder)
     {
-        userInputAnswer = default;
-
-        if (string.IsNullOrWhiteSpace(input) || input.Length != 1)
-        {
-            return false;
-        }
-
-        char ch = char.ToUpper(input[0]);
-
-        if (!"ABCDHL".Contains(ch))
-            return false;
-
-        userInputAnswer = ch;
-        return true;
-    }
-    // ** прочти
-    public static bool CheckIsCorrectUserAnswer(char userAnswer,int questionOrder)
-    {
-        
-
         int correctAnswerInInt = questionCorrectAnswersIndex[questionOrder];
 
-        if(! (userAnswer - 64 == correctAnswerInInt) ) //
+        if (!(userAnswer - 64 == correctAnswerInInt))
         {
-           return false;
+            return false;
         }
         return true;
-    }  // -- улучши
-    
+    }
 
     public static void LooseMenu(int questionOrder, int[] immutableSum)
     {
-   
-
-
-        Console.WriteLine("К сожалению вы проиграли в нашей игре");
+        Console.WriteLine("Unfortunately, you lost in our game.");
 
         int maxImmutable = 0;
 
         for (int i = 0; i < immutableSum.Length; ++i)
         {
-            if (immutableSum[i] <= questionRewards[questionOrder])
+            if (immutableSum[i] < questionRewards[questionOrder])
             {
                 maxImmutable = immutableSum[i];
             }
@@ -389,18 +339,18 @@ class Program
 
         if (maxImmutable > 0)
         {
-            Console.WriteLine($"Но за то вы выиграли несгораемую сумму {maxImmutable} рублей\nПоздравляем!");
+            Console.WriteLine($"But you won a guaranteed sum of {maxImmutable} rubles.\nCongratulations!");
         }
         else
         {
-            Console.WriteLine("И ничего не выиграли");
+            Console.WriteLine("And you didn't win anything.");
         }
     }
     public static bool IsFirstFool()
     {
         if (firstFool)
         {
-            Console.WriteLine("Вы потеряли одно право на ошибку!");
+            Console.WriteLine("You lost one chance to make a mistake!");
             firstFool = false;
             return true;
         }
@@ -409,51 +359,42 @@ class Program
 
     public static void WinMenu(int questionOrder)
     {
-        Console.WriteLine("И это правильный ответ на вопрос! ");
+        Console.WriteLine("That's the correct answer to the question!");
     }
 
     public static void WinGameMenu()
     {
-        Console.WriteLine("Поздравляем вас участник, вы ответили на все вопросы и стали победителем шоу Кто Хочет Стать Миллионером!");
+        Console.WriteLine("Congratulations contestant, you answered all the questions and became the winner of 'Who Wants to Be a Millionaire!'");
     }
 
     public static void TakeMoneyMenu(int questionOrder)
     {
         int reward = questionOrder == 0 ? 0 : questionRewards[questionOrder - 1];
-        Console.WriteLine($"Вы решили забрать деньги. Ваш выигрыш составил: {reward} рублей.");
-        Console.WriteLine("Спасибо за игру! До свидания.");
+        Console.WriteLine($"You decided to take the money. Your winnings: {reward} rubles.");
+        Console.WriteLine("Thank you for playing! Goodbye.");
     }
-
-
-
-
-
-
-
-
 
     public static void PlayGame()
     {
-
         StartMenu();
+
+        if (!IsUserWantToPlay())
+            return;
 
         ImmutableSum(out int[] immutableSum);
 
         Console.Clear();
 
+        for (int questionOrder = 0; questionOrder < questionCount; ++questionOrder)
+        {
+            Console.WriteLine($"{questionOrder + 1}) Question for {questionRewards[questionOrder]} rubles - ");
 
-            for (int questionOrder = 0; questionOrder < questionCount; ++questionOrder)
-            {
-                Console.WriteLine($"{questionOrder + 1}) Вопрос на {questionRewards[questionOrder]} рублей - ");
+            ShowQuestionAndAnswersByIndex(questionOrder);
 
+            Console.Write("Your answer: ");
 
-
-                ShowQuestionByIndex(questionOrder);
-
-                ShowAnswersByIndex(questionOrder);
-
-                Console.Write("Ваш ответ: ");
             char userAnswer = InputAnswer();
+
             Console.WriteLine();
 
             if (userAnswer == 'H')
@@ -474,8 +415,6 @@ class Program
                 TakeMoneyMenu(questionOrder);
                 return;
             }
-
-
             else
             {
                 if (CheckUserAnswer(userAnswer, questionOrder, immutableSum))
@@ -488,7 +427,6 @@ class Program
                     {
                         questionOrder--;
                         continue;
-
                     }
                     else
                     {
@@ -497,27 +435,12 @@ class Program
                     }
                 }
             }
-
-
-
-
-
-            }
-        
-
+        }
 
         WinGameMenu();
-
-
     }
     public static void Main()
     {
-         PlayGame();
-        //throw new Exception("dwad");
-
-
-
-
+        PlayGame();
     }
-
 }

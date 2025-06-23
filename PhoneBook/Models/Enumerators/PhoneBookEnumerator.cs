@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PhoneBookEnumerator : IEnumerator<PhoneNumber>
 {
-    private readonly List<PhoneNumber> sorted;
+    private List<PhoneNumber> sorted;
     private int position = -1;
 
     public PhoneBookEnumerator(IEnumerable<PhoneNumber> source, SortMode sortMode)

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PhoneBookEnumerable : IEnumerable<PhoneNumber>
 {
-    private readonly IEnumerable<PhoneNumber> source;
-    private readonly SortMode sortMode;
+    private  IEnumerable<PhoneNumber> source;
+    private  SortMode sortMode;
 
     public PhoneBookEnumerable(IEnumerable<PhoneNumber> source, SortMode sortMode)
     {

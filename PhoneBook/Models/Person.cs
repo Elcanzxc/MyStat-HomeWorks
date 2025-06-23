@@ -9,14 +9,14 @@ namespace MyPhoneBook.Models;
 
         public Person(string name, string surname, Gender gender)
         {
-            Name = name;
-            Surname = surname;
-            Gender = gender;
+        this.Name = name;
+        this.Surname = surname;
+        this.Gender = gender;
         }
 
         public override string ToString()
         {
-            return $"{Name} {Surname} ({Gender})";
+            return $"{this.Name} {this.Surname} ({this.Gender})";
         }
     }
 

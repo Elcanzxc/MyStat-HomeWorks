@@ -7,12 +7,12 @@ public class PhoneNumber
 
     public PhoneNumber(Person person, string number)
     {
-        Person = person;
-        Number = number;
+        this.Person = person;
+        this.Number = number;
     }
 
     public override string ToString()
     {
-        return $"{Person}: {Number}";
+        return $"{this.Person} {this.Number}";
     }
 }

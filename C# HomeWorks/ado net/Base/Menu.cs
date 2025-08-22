@@ -150,14 +150,14 @@ static class Menu
         {
             Console.Clear();
 
-            // Заголовок
+            
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("╔" + new string('═', width+2) + "╗");
             Console.WriteLine($"║ {title.PadRight(width)} ║");
             Console.WriteLine("╚" + new string('═', width+2) + "╝\n");
             Console.ResetColor();
 
-            // Меню
+           
             Console.WriteLine("╔" + new string('═', width + 2) + "╗");
             for (int i = 0; i < items.Length; i++)
             {

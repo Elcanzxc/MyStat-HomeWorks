@@ -1,0 +1,16 @@
+
+CREATE DATABASE UserProfile
+
+USE UserProfile
+
+CREATE TABLE Users(
+ [Id] INT PRIMARY KEY IDENTITY,
+ [Name] NVARCHAR(255) NOT NULL CHECK(LEN([Name]) > 2),
+ [Surname] NVARCHAR(255) NULL CHECK(LEN([Surname]) > 2),
+ [BirthDate] DATETIME2 NULL CHECK(BirthDate <= GETDATE())
+)
+
+INSERT INTO Users
+VALUES (N'Elcan',N'Aliyev', '05-05-2006')
+
+SELECT * FROM Users

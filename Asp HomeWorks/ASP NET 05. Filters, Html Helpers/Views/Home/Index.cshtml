@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="container mt-5">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-4 text-center">
+            <div class="profile-card">
+                <img src="@Url.Content("~/images/photomode_02102025_132254.png")"
+                     alt="Мое фото"
+                     class="img-fluid rounded-circle shadow-lg profile-img" />
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-4 mt-md-0">
+            <h1 class="display-4 fw-bold text-primary">Привет, я Elcan Aliyev!</h1>
+            <p class="lead">Junior .NET Developer | ASP.NET MVC enthusiast</p>
+            <hr class="my-4">
+            <p>
+                Я занимаюсь разработкой веб-приложений на стеке Microsoft.
+                Люблю превращать сложные задачи в чистый и понятный код.
+                В свободное время изучаю архитектуру систем и пробую новые фишки в C#.
+            </p>
+            <div class="mt-4">
+
+                <a  asp-area="" asp-controller="Home" asp-action="Projects" class="btn btn-primary btn-lg px-4 me-md-2">Мои проекты</a>
+                <a asp-area="" asp-controller="Home" asp-action="Projects" class="btn btn-outline-secondary btn-lg px-4">Связаться</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-img {
+        border: 5px solid #fff;
+        transition: transform 0.3s ease-in-out;
+        max-width: 280px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+
+    .profile-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+
+    .display-4 {
+        font-weight: 800;
+    }
+</style>

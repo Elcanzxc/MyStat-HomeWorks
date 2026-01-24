@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Projects";
+}
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-gradient">Мои разработки</h2>
+        <p class="text-muted">От консольных утилит и алгоритмов до Fullstack приложений</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-primary shadow-lg overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-lg-4 bg-primary d-flex align-items-center justify-content-center p-4">
+                        <i class="bi bi-clock-history text-white" style="font-size: 8rem;"></i>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h3 class="card-title fw-bold text-primary">TimeLineOfMe</h3>
+                                <span class="badge bg-danger">In Progress</span>
+                            </div>
+                            <p class="text-muted mt-2"><strong>Стек:</strong> ASP.NET Web API, React, Entity Framework Core</p>
+                            <p class="card-text">
+                                Это мой амбициозный Fullstack-проект. Личный таймлайн, который позволяет фиксировать события года: прочитанные книги (с оценками и рецензиями), пройденные курсы и важные достижения.
+                                Проект учит меня проектированию сложных API и взаимодействию фронтенда на React с бэкендом.
+                            </p>
+                            <a href="https://github.com/Elcanzxc/TimeLineOfMe" target="_blank" class="btn btn-outline-primary mt-3">
+                                <i class="bi bi-github"></i> Смотреть на GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mb-4 fw-bold">Технические проекты и задачи</h4>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark"><i class="bi bi-gear-fill me-2"></i>System & Async</h5>
+                    <ul class="list-unstyled mt-3">
+                        <li><i class="bi bi-check2 text-success"></i> Threads / Tasks-Parallel</li>
+                        <li><i class="bi bi-check2 text-success"></i> Async-Await (Deep Dive)</li>
+                        <li><i class="bi bi-check2 text-success"></i> MyLinq (Custom implementation)</li>
+                        <li><i class="bi bi-check2 text-success"></i> ServerClient & FTP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark"><i class="bi bi-database-fill me-2"></i>Data & Databases</h5>
+                    <ul class="list-unstyled mt-3">
+                        <li><i class="bi bi-check2 text-success"></i> SQL Tables & Server</li>
+                        <li><i class="bi bi-check2 text-success"></i> Restaurant + EF Core</li>
+                        <li><i class="bi bi-check2 text-success"></i> PhoneBook (ADO.NET)</li>
+                        <li><i class="bi bi-check2 text-success"></i> Files & Attributes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark"><i class="bi bi-controller me-2"></i>Games & Logic</h5>
+                    <ul class="list-unstyled mt-3">
+                        <li><i class="bi bi-check2 text-success"></i> Mortal Kombat (Console)</li>
+                        <li><i class="bi bi-check2 text-success"></i> Who Wants to be a Millionaire 2.0</li>
+                        <li><i class="bi bi-check2 text-success"></i> MyRestaurant Logic</li>
+                        <li><i class="bi bi-check2 text-success"></i> Smart Calculator</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+   
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+ 
+    .text-gradient {
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+   
+    .list-unstyled li {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+</style>

@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "About Me ";
+}
+<div class="container mt-5 mb-5">
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold">Давайте познакомимся! 🤝</h1>
+            <p class="lead text-muted">Мой путь: от первых строк кода до мечты о кроссплатформенном будущем</p>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 bg-primary text-white p-4 mb-4">
+                <h4 class="fw-bold">Профайл</h4>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><i class="bi bi-person-fill me-2"></i> 19 лет</li>
+                    <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i> Родился: Луганск, Украина</li>
+                    <li class="mb-2"><i class="bi bi-house-heart-fill me-2"></i> Живу: Баку, Азербайджан</li>
+                    <li class="mb-2"><i class="bi bi-book-fill me-2"></i> BEU (Baku Engineering University)</li>
+                </ul>
+            </div>
+
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="fw-bold text-primary mb-3">Главная мечта</h5>
+                <p class="fst-italic text-muted">
+                    "Создать мощное кроссплатформенное приложение, которое упростит жизнь тысячам людей по всему миру."
+                </p>
+                <i class="bi bi-rocket-takeoff-fill text-warning" style="font-size: 2rem;"></i>
+            </div>
+        </div>
+
+        <div class="col-lg-8 ps-lg-5">
+            <h2 class="fw-bold mb-4">Кто я такой?</h2>
+
+            <p class="fs-5">
+                Меня зовут Elcan Aliyev, и мне 19 лет Я родился в Украине, в городе Луганск но сейчас мой дом — солнечный Баку
+                Жизнь в разных странах научила меня адаптивности и открытости к новому — качествам, которые критически важны для любого программиста.
+            </p>
+
+            <div class="my-4 p-3 border-start border-primary border-4 bg-light">
+                <h5 class="fw-bold">Где я учусь?</h5>
+                <p class="mb-0">
+                    Сейчас я учусь в <strong>Baku Engineering University (BEU)</strong>, где получаю фундаментальную базу.
+                    Однако моим настоящим трамплином в мир разработки стала <strong>IT-академия Step IT</strong>. Именно там я получил 90% своих практических знаний и осознал, что программирование — это не просто работа, а искусство.
+                </p>
+            </div>
+
+            <p>
+                Я верю, что за кроссплатформенностью будущее. Мой опыт в C#, C++ и React — это кирпичики, из которых я строю свою главную цель.
+                Я не боюсь сложных задач (многопоточность, сервер-клиентские приложения, SQL) — они делают меня сильнее.
+            </p>
+
+            <div class="mt-4">
+                <h5 class="fw-bold mb-3 text-secondary">Мой девиз:</h5>
+                <blockquote class="blockquote">
+                    <p>"Код — это стихи, написанные на языке логики."</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+   
+    .container {
+        animation: fadeIn 0.8s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+   
+    .bg-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%) !important;
+    }
+
+    .list-unstyled li {
+        font-size: 1.1rem;
+    }
+</style>

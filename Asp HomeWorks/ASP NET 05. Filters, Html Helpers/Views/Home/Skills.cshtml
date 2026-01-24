@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Skills ";
+}
+
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Мой Стек Технологий</h2>
+        <p class="text-muted">От алгоритмов на C++ до современных Web API на .NET</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="p-4 border rounded-3 bg-light shadow-sm h-100">
+                <h4 class="mb-4 text-primary"><i class="bi bi-cpu"></i> Backend & Core</h4>
+
+                <label>C# (Expert)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 95%"></div>
+                </div>
+
+                <label>C++ (Advanced)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 85%"></div>
+                </div>
+
+                <label>SQL Server (Good)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+                </div>
+
+                <label>Python (Intermediate)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 55%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="p-4 border rounded-3 bg-light shadow-sm h-100">
+                <h4 class="mb-4 text-danger"><i class="bi bi-globe"></i> Web & Frontend</h4>
+
+                <label>JS / React (Good)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"></div>
+                </div>
+
+                <label>ASP.NET Web API (Learning)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-dark progress-bar-striped progress-bar-animated" role="progressbar" style="width: 40%"></div>
+                </div>
+
+                <label>HTML / CSS (Basic)</label>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 30%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 p-4 bg-dark text-white rounded-3 shadow">
+        <h5><span class="text-warning">#</span> В фокусе:</h5>
+        <p class="mb-0">
+            Сейчас я активно погружаюсь в <strong>ASP.NET Web API</strong>. Моя цель — объединить мощь C# и гибкость React для создания высокопроизводительных микросервисов.
+            Знание C++ на продвинутом уровне помогает мне понимать, как код работает "под капотом" и писать максимально оптимизированные решения.
+        </p>
+    </div>
+</div>
+
+<style>
+
+    .progress {
+        background-color: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        transition: width 1.5s ease-in-out;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .shadow-sm:hover {
+        box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1) !important;
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+</style>

@@ -1,0 +1,14 @@
+
+
+
+1) В Классе InvoiceDbContext ovveride SaveChangeAsync и есть метод OnModelCreating
+
+2)  .HasConversion<string>(); используется в InvoiceConfigurations
+
+3) ASP 11 Показал свой API Response (использовать у себя) и показал способ возвращение страницы с выбранным количеством итемов (pagination)
+
+4) Исправить маппинг статус енум
+
+5) Сделать абстрактный класс с шаблоном для репрозитория
+
+6)

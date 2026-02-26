@@ -12,16 +12,21 @@ public class CustomerService : ICustomerService
 {
     private readonly InvoiceDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUserAccessor _userAccessor; 
 
-    public CustomerService(InvoiceDbContext context, IMapper mapper)
+    public CustomerService(InvoiceDbContext context, IMapper mapper, IUserAccessor userAccessor)
     {
         _context = context;
         _mapper = mapper;
+        _userAccessor = userAccessor;
     }
 
     public async Task<IEnumerable<CustomerResponseDto>> GetAll()
     {
-        var customers = await _context.Customers.ToListAsync();
+        var customers = await _context.Customers
+                    .Where(c => c.UserId == _userAccessor.UserId)
+                    .ToListAsync();
+
         return _mapper.Map<IEnumerable<CustomerResponseDto>>(customers);
     }
 
@@ -31,7 +36,8 @@ public class CustomerService : ICustomerService
         var customers = await _context.Customers
         .Include(c => c.Invoices)         
             .ThenInclude(i => i.Rows)     
-        .AsNoTracking()                    
+        .AsNoTracking()
+        .Where(c => c.UserId == _userAccessor.UserId)
         .ToListAsync();
 
         return _mapper.Map<IEnumerable<CustomerDetailsResponseDto>>(customers);
@@ -41,14 +47,15 @@ public class CustomerService : ICustomerService
         var customer = await _context.Customers
                 .Include(c => c.Invoices)
                     .ThenInclude(i => i.Rows)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                  .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _userAccessor.UserId);
 
         return customer == null ? null : _mapper.Map<CustomerDetailsResponseDto>(customer);
     }
 
     public async Task<CustomerResponseDto?> GetById(int id)
     {
-        var customer = await _context.Customers.FindAsync(id);
+        var customer = await _context.Customers
+                    .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _userAccessor.UserId);
         return customer == null ? null : _mapper.Map<CustomerResponseDto>(customer);
     }
 
@@ -56,6 +63,8 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponseDto> Create(CustomerRequestDto dto)
     {
         var entity = _mapper.Map<Customer>(dto);
+
+        entity.UserId = _userAccessor.UserId;
 
         _context.Customers.Add(entity);
         await _context.SaveChangesAsync();
@@ -65,7 +74,8 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerResponseDto?> Update(int id, CustomerUpdateDto dto)
     {
-        var entity = await _context.Customers.FindAsync(id);
+        var entity = await _context.Customers
+           .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _userAccessor.UserId);
         if (entity == null) return null;
 
         _mapper.Map(dto, entity);
@@ -77,7 +87,8 @@ public class CustomerService : ICustomerService
 
     public async Task<bool> SoftDeleteAsync(int id)
     {
-        var entity = await _context.Customers.FindAsync(id);
+        var entity = await _context.Customers
+               .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _userAccessor.UserId);
         if (entity == null) return false;
 
         entity.DeletedAt = DateTimeOffset.UtcNow;
@@ -89,8 +100,8 @@ public class CustomerService : ICustomerService
     public async Task<bool> HardDeleteAsync(int id)
     {
         var entity = await _context.Customers
-            .Include(c => c.Invoices)
-            .FirstOrDefaultAsync(c => c.Id == id);
+                .Include(c => c.Invoices)
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _userAccessor.UserId);
 
         if (entity == null) return false;
 
@@ -112,7 +123,7 @@ public class CustomerService : ICustomerService
         queryParams.Validate();
 
         var query = _context.Customers
-            .Where(c => c.DeletedAt == null)
+            .Where(c => c.DeletedAt == null && c.UserId == _userAccessor.UserId)
             .AsQueryable();
 
      

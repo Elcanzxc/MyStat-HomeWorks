@@ -2,6 +2,7 @@
 using InvoiceProject.Common;
 using InvoiceProject.DTO.Customer;
 using InvoiceProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceProject.Controllers;
@@ -9,6 +10,8 @@ namespace InvoiceProject.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
+
 public class CustomersController : ControllerBase
 {
     private readonly ICustomerService _customerService;

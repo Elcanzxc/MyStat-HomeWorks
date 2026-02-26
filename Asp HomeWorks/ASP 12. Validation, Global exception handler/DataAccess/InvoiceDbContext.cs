@@ -1,10 +1,11 @@
 ﻿using InvoiceProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace InvoiceProject.DataAccess;
 
-public class InvoiceDbContext : DbContext
+public class InvoiceDbContext : IdentityDbContext<ApplicationUser>
 {
 
     public InvoiceDbContext(DbContextOptions<InvoiceDbContext> options)

@@ -1,4 +1,24 @@
-﻿namespace InvoiceProject.DTO.Customer;
+﻿
+namespace InvoiceProject.DTO;
+
+public class CustomerDetailsResponseDto
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string? Address { get; set; }
+
+    public string Email { get; set; } = null!;
+
+    public string? PhoneNumber { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; }
+
+    public IEnumerable<InvoiceResponseDto> CustomerInvoices { get; set; } = null!;
+
+}
+
 
 /// <summary>
 /// Parameters for filtering, sorting, and paginating customer requests.
@@ -30,4 +50,42 @@ public class CustomerQueryParams
         SortDirection = SortDirection?.ToLower() == "desc" ? "desc" : "asc";
         if (!string.IsNullOrWhiteSpace(Sort)) Sort = Sort.ToLower();
     }
+}
+
+
+public class CustomerRequestDto
+{
+
+    public string Name { get; set; } = null!;
+
+    public string? Address { get; set; }
+
+    public string Email { get; set; } = null!;
+
+    public string? PhoneNumber { get; set; }
+
+}
+public class CustomerResponseDto
+{
+
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string? Address { get; set; }
+
+    public string Email { get; set; } = null!;
+
+    public string? PhoneNumber { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; }
+
+}
+public class CustomerUpdateDto
+{
+    public string Name { get; set; } = null!;
+
+    public string? Address { get; set; }
+
+    public string? PhoneNumber { get; set; }
 }

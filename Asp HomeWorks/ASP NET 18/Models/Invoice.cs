@@ -24,13 +24,15 @@ public class Invoice
 
 
 
+
     public void RecalculateTotal()
     {
         TotalSum = Rows.Sum(r => r.Quantity * r.Rate);
     }
 
 
-
+    public ICollection<InvoiceAttachment> Attachments { get; set; } 
+            = new List<InvoiceAttachment>();
 }
 
 

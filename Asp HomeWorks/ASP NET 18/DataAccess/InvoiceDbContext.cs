@@ -16,6 +16,8 @@ public class InvoiceDbContext : IdentityDbContext<User>
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<InvoiceRow> InvoiceRows => Set<InvoiceRow>();
 
+    public DbSet<InvoiceAttachment> Attachments => Set<InvoiceAttachment>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

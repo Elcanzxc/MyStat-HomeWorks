@@ -2,11 +2,11 @@
 using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
 using InvoiceProject.DataAccess;
-using InvoiceProject.DTO.Customer;
 using InvoiceProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using InvoiceProject.DTO;
 
 namespace InvoiceProject.Services;
 
@@ -21,7 +21,7 @@ public class CustomerService : ICustomerService
         _context = context;
         _mapper = mapper;
 
-        // Извлекаем ID пользователя из JWT токена
+     
         var userId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         _currentUserId = userId ?? throw new UnauthorizedAccessException("User ID not found in token.");
     }
@@ -29,7 +29,7 @@ public class CustomerService : ICustomerService
     public async Task<IEnumerable<CustomerResponseDto>> GetAll()
     {
         var customers = await _context.Customers
-                    .Where(c => c.UserId == _currentUserId) // Фильтр
+                    .Where(c => c.UserId == _currentUserId) 
                     .ToListAsync();
 
         return _mapper.Map<IEnumerable<CustomerResponseDto>>(customers);
@@ -40,7 +40,7 @@ public class CustomerService : ICustomerService
         var customers = await _context.Customers
         .Include(c => c.Invoices)
             .ThenInclude(i => i.Rows)
-        .Where(c => c.UserId == _currentUserId) // Фильтр
+        .Where(c => c.UserId == _currentUserId) 
         .AsNoTracking()
         .ToListAsync();
 
@@ -52,7 +52,7 @@ public class CustomerService : ICustomerService
         var customer = await _context.Customers
                 .Include(c => c.Invoices)
                     .ThenInclude(i => i.Rows)
-                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); // Фильтр
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); 
 
         return customer == null ? null : _mapper.Map<CustomerDetailsResponseDto>(customer);
     }
@@ -60,7 +60,7 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponseDto?> GetById(int id)
     {
         var customer = await _context.Customers
-                    .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); // Фильтр
+                    .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); 
         return customer == null ? null : _mapper.Map<CustomerResponseDto>(customer);
     }
 
@@ -68,7 +68,7 @@ public class CustomerService : ICustomerService
     {
         var entity = _mapper.Map<Customer>(dto);
 
-        // Принудительно привязываем клиента к текущему юзеру
+        
         entity.UserId = _currentUserId;
         entity.CreatedAt = DateTimeOffset.UtcNow;
 
@@ -81,7 +81,7 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponseDto?> Update(int id, CustomerUpdateDto dto)
     {
         var entity = await _context.Customers
-           .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); // Фильтр
+           .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); 
 
         if (entity == null) return null;
 
@@ -95,7 +95,7 @@ public class CustomerService : ICustomerService
     public async Task<bool> SoftDeleteAsync(int id)
     {
         var entity = await _context.Customers
-               .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); // Фильтр
+               .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); 
 
         if (entity == null) return false;
 
@@ -108,7 +108,7 @@ public class CustomerService : ICustomerService
     {
         var entity = await _context.Customers
                 .Include(c => c.Invoices)
-                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId); // Фильтр
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == _currentUserId);
 
         if (entity == null) return false;
 
@@ -129,7 +129,7 @@ public class CustomerService : ICustomerService
         queryParams.Validate();
 
         var query = _context.Customers
-            .Where(c => c.DeletedAt == null && c.UserId == _currentUserId) // Фильтр владельца
+            .Where(c => c.DeletedAt == null && c.UserId == _currentUserId) 
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.Search))

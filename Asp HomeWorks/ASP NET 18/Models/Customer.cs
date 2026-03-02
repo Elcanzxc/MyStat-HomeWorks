@@ -12,7 +12,7 @@ public class Customer
     public DateTimeOffset UpdatedAt { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
 
-    public string UserId { get; set; }
+    public string UserId { get; set; } = null!;
 
     public User User { get; set; } = null!;
 

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InvoiceProject.DTO.Customer;
+using InvoiceProject.DTO;
 
 namespace InvoiceProject.Validators;
 

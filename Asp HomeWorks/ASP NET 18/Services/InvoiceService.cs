@@ -2,11 +2,11 @@
 using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
 using InvoiceProject.DataAccess;
-using InvoiceProject.DTO.Invoice;
 using InvoiceProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using InvoiceProject.DTO;
 
 namespace InvoiceProject.Services;
 
@@ -30,7 +30,7 @@ public class InvoiceService : IInvoiceService
         var invoices = await _context.Invoices
             .Include(i => i.Rows)
             .Include(i => i.Customer)
-            .Where(i => i.Customer.UserId == _currentUserId) // Фильтр владельца
+            .Where(i => i.Customer.UserId == _currentUserId) 
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<InvoiceResponseDto>>(invoices);
@@ -48,7 +48,7 @@ public class InvoiceService : IInvoiceService
 
     public async Task<InvoiceResponseDto> Create(InvoiceRequestDto dto)
     {
-        // ВАЖНО: Проверяем, что CustomerId принадлежит текущему юзеру
+     
         var customerExists = await _context.Customers
             .AnyAsync(c => c.Id == dto.CustomerId && c.UserId == _currentUserId);
 
@@ -59,7 +59,7 @@ public class InvoiceService : IInvoiceService
 
         var invoice = _mapper.Map<Invoice>(dto);
 
-        // Маппер заполнит Rows, но нам нужно посчитать TotalSum
+      
         invoice.RecalculateTotal();
 
         _context.Invoices.Add(invoice);
@@ -139,7 +139,7 @@ public class InvoiceService : IInvoiceService
 
         var query = _context.Invoices
             .Include(i => i.Customer)
-            .Where(i => i.DeletedAt == null && i.Customer.UserId == _currentUserId) // Фильтр безопасности
+            .Where(i => i.DeletedAt == null && i.Customer.UserId == _currentUserId) 
             .AsQueryable();
 
         if (queryParams.CustomerId.HasValue)
@@ -167,7 +167,7 @@ public class InvoiceService : IInvoiceService
         var invoices = await query
             .Skip(skip)
             .Take(queryParams.PageSize)
-            .Include(i => i.Rows) // Не забываем подгрузить строки для результата
+            .Include(i => i.Rows) 
             .ToListAsync();
 
         var dtos = _mapper.Map<IEnumerable<InvoiceResponseDto>>(invoices);

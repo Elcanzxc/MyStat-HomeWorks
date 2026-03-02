@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using InvoiceProject.DTO.ApplicationUserDto;
-using InvoiceProject.DTO.Customer;
-using InvoiceProject.DTO.Invoice;
-using InvoiceProject.DTO.InvoiceRow;
+using InvoiceProject.DTO;
 using InvoiceProject.Models;
 namespace InvoiceProject.Mappings;
 

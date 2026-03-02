@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using InvoiceProject.Abtractions.Interfaces;
+using InvoiceProject.Config;
 using InvoiceProject.DataAccess;
-using InvoiceProject.DTO.ApplicationUserDto;
+using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.PortableExecutable;
@@ -19,15 +21,18 @@ public class UserService : IUsersService
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
+    private readonly JWTConfig _config;
 
-    public UserService(
-            UserManager<User> userManager,
-            IConfiguration configuration,
-            IMapper mapper)
+
+    public UserService(UserManager<User> userManager,
+        IMapper mapper, 
+        IConfiguration configuration,
+        IOptions<JWTConfig> config)
     {
         _userManager = userManager;
         _mapper = mapper;
-        _configuration = configuration; 
+        _configuration = configuration;
+        _config = config.Value; 
     }
 
     public async Task<UserResponse> Login(UserLogin loginRequest)
@@ -80,8 +85,7 @@ public class UserService : IUsersService
     }
     private string GenerateAccessToken(User user)
     {
-        var jwtOptions = _configuration.GetSection("JwtOptions");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions["Key"]!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.SecretKey));
 
         var claims = new List<Claim>
         {
@@ -92,10 +96,10 @@ public class UserService : IUsersService
         };
 
         var token = new JwtSecurityToken(
-            issuer: jwtOptions["Issuer"],
-            audience: jwtOptions["Audience"],
+            issuer: _config.Issuer,
+            audience: _config.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtOptions["ExpirationTime"])),
+            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config.ExpirationInMinutes)),
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         );
 

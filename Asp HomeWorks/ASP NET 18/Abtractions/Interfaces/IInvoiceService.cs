@@ -1,5 +1,5 @@
 ﻿using InvoiceProject.Common;
-using InvoiceProject.DTO.Invoice;
+using InvoiceProject.DTO;
 using InvoiceProject.Models;
 
 namespace InvoiceProject.Abtractions.Interfaces;

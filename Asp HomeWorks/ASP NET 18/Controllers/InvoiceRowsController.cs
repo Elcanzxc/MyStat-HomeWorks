@@ -1,13 +1,12 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
-using InvoiceProject.DTO.Invoice;
-using InvoiceProject.DTO.InvoiceRow;
+using InvoiceProject.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceProject.Controllers;
 
-[Authorize] // Глобально закрываем контроллер для безопасности
+[Authorize] 
 [ApiController]
 [Route("api/[controller]")]
 public class InvoiceRowsController : ControllerBase
@@ -22,7 +21,7 @@ public class InvoiceRowsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceRowResponseDto>>>> GetAll()
     {
-        // Сервис автоматически отфильтрует только те строки, которые принадлежат клиентам юзера
+       
         var result = await _rowService.GetAll();
         return Ok(ApiResponse<IEnumerable<InvoiceRowResponseDto>>.SuccessResponse(result, "Invoices retrieved successfully"));
     }
@@ -30,7 +29,7 @@ public class InvoiceRowsController : ControllerBase
     [HttpPost("invoice/{invoiceId:int}")]
     public async Task<ActionResult<ApiResponse<InvoiceRowResponseDto>>> AddRow(int invoiceId, [FromBody] InvoiceRowRequestDto dto)
     {
-        // Сервис проверит, принадлежит ли этот invoiceId текущему пользователю
+     
         var result = await _rowService.AddRow(invoiceId, dto);
         return Ok(ApiResponse<InvoiceRowResponseDto>.SuccessResponse(result, "Row added and Invoice total updated"));
     }

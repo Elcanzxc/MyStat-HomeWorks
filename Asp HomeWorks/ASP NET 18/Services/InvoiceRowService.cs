@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.DataAccess;
-using InvoiceProject.DTO.Invoice;
-using InvoiceProject.DTO.InvoiceRow;
+using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +26,11 @@ public class InvoiceRowService : IInvoiceRowService
 
     public async Task<IEnumerable<InvoiceRowResponseDto>> GetAll()
     {
-        // Достаем строки только тех инвойсов, чей клиент принадлежит текущему юзеру
+      
         var invoicesRows = await _context.InvoiceRows
             .Include(r => r.Invoice)
                 .ThenInclude(i => i.Customer)
-            .Where(r => r.Invoice.Customer.UserId == _currentUserId) // ПРОВЕРКА ПО ЦЕПОЧКЕ
+            .Where(r => r.Invoice.Customer.UserId == _currentUserId) 
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<InvoiceRowResponseDto>>(invoicesRows);
@@ -39,10 +38,10 @@ public class InvoiceRowService : IInvoiceRowService
 
     public async Task<InvoiceRowResponseDto> AddRow(int invoiceId, InvoiceRowRequestDto dto)
     {
-        // Проверяем инвойс и его владельца (через Customer)
+      
         var invoice = await _context.Invoices
             .Include(i => i.Rows)
-            .Include(i => i.Customer) // Обязательно подгружаем клиента для проверки UserId
+            .Include(i => i.Customer) 
             .FirstOrDefaultAsync(i => i.Id == invoiceId && i.Customer.UserId == _currentUserId);
 
         if (invoice == null) throw new KeyNotFoundException("Invoice not found or access denied.");
@@ -55,7 +54,7 @@ public class InvoiceRowService : IInvoiceRowService
 
         _context.InvoiceRows.Add(rowEntity);
 
-        // Используем твой метод модели для пересчета
+
         invoice.RecalculateTotal();
 
         await _context.SaveChangesAsync();
@@ -64,7 +63,7 @@ public class InvoiceRowService : IInvoiceRowService
 
     public async Task<InvoiceRowResponseDto?> UpdateRow(int rowId, InvoiceRowUpdateDto dto)
     {
-        // Проверяем строку через всю цепочку до UserId
+       
         var row = await _context.InvoiceRows
             .Include(r => r.Invoice)
                 .ThenInclude(i => i.Customer)
@@ -102,7 +101,7 @@ public class InvoiceRowService : IInvoiceRowService
 
         await _context.SaveChangesAsync();
 
-        // После сохранения пересчитываем общую сумму инвойса
+        
         row.Invoice.RecalculateTotal();
         await _context.SaveChangesAsync();
 

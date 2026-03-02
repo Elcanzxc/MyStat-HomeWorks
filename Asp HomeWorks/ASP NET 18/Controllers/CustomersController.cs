@@ -1,13 +1,13 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
-using InvoiceProject.DTO.Customer;
+using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceProject.Controllers;
 
-[Authorize] // ГЛОБАЛЬНО: Теперь все методы требуют Bearer токен
+[Authorize] 
 [ApiController]
 [Route("api/[controller]")]
 public class CustomersController : ControllerBase
@@ -22,7 +22,7 @@ public class CustomersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiResponse<IEnumerable<CustomerResponseDto>>>> GetAll()
     {
-        // Сервис сам отфильтрует клиентов по UserId из токена
+      
         var customers = await _customerService.GetAll();
         return Ok(ApiResponse<IEnumerable<CustomerResponseDto>>.SuccessResponse(customers, "Returns the list of Customers successfully"));
     }
@@ -37,8 +37,7 @@ public class CustomersController : ControllerBase
         return Ok(ApiResponse<CustomerResponseDto>.SuccessResponse(customer, "Customer found"));
     }
 
-    [HttpGet("detailed")] // Убрал лишний слеш, чтобы было api/customers/detailed
-    // Если у тебя настроены Policy, оставляем. Если нет — просто [Authorize]
+    [HttpGet("detailed")] 
     // [Authorize(Policy = "CanReadInvoices")] 
     public async Task<ActionResult<ApiResponse<IEnumerable<CustomerDetailsResponseDto>>>> GetAllDetailed()
     {
@@ -59,7 +58,7 @@ public class CustomersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ApiResponse<CustomerResponseDto>>> Create([FromBody] CustomerRequestDto dto)
     {
-        // Сервис автоматически привяжет клиента к текущему UserID
+     
         var result = await _customerService.Create(dto);
         var response = ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Customer created successfully");
 

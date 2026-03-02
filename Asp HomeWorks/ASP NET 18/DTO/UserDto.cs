@@ -1,4 +1,4 @@
-﻿namespace InvoiceProject.DTO.ApplicationUserDto;
+﻿namespace InvoiceProject.DTO;
 
 public class UserRegister
 {

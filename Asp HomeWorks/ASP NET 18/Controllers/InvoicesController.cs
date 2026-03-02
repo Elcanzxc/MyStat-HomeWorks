@@ -1,12 +1,12 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
-using InvoiceProject.DTO.Invoice;
+using InvoiceProject.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceProject.Controllers;
 
-[Authorize] // ГЛОБАЛЬНО: Теперь инвойсы доступны только владельцам токена
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class InvoicesController : ControllerBase
@@ -21,7 +21,7 @@ public class InvoicesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceResponseDto>>>> GetAll()
     {
-        // Сервис сам отфильтрует инвойсы через цепочку Invoice -> Customer -> UserId
+       
         var result = await _invoiceService.GetAll();
         return Ok(ApiResponse<IEnumerable<InvoiceResponseDto>>.SuccessResponse(result, "Invoices retrieved successfully"));
     }
@@ -39,7 +39,7 @@ public class InvoicesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ApiResponse<InvoiceResponseDto>>> Create([FromBody] InvoiceRequestDto dto)
     {
-        // Сервис проверит, что CustomerId принадлежит текущему пользователю
+      
         var result = await _invoiceService.Create(dto);
         var response = ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Invoice created successfully");
 

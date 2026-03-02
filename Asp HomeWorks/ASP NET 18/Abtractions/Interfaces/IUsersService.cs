@@ -1,4 +1,4 @@
-﻿using InvoiceProject.DTO.ApplicationUserDto;
+﻿using InvoiceProject.DTO;
 
 namespace InvoiceProject.Abtractions.Interfaces;
 

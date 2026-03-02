@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-using InvoiceProject.DTO.Invoice;
-
+using InvoiceProject.DTO;
 namespace InvoiceProject.Validators;
 
 public class InvoiceUpdateDtoValidator : AbstractValidator<InvoiceUpdateDto>

@@ -1,5 +1,4 @@
-﻿using InvoiceProject.DTO.Invoice;
-using InvoiceProject.DTO.InvoiceRow;
+﻿using InvoiceProject.DTO;
 
 namespace InvoiceProject.Abtractions.Interfaces;
 

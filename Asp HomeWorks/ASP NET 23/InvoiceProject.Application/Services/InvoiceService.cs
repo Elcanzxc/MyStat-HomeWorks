@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Common;
-using InvoiceProject.DataAccess;
 using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Http;

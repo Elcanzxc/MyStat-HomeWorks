@@ -13,8 +13,4 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public Task<IEnumerable<User>> GetOrderedByEmailExceptIdsAsync(IEnumerable<string> excludeIds)
-    {
-        throw new NotImplementedException();
-    }
 }

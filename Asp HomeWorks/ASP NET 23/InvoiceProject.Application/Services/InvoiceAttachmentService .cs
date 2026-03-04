@@ -1,8 +1,6 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
-using InvoiceProject.DataAccess;
 using InvoiceProject.DTO;
 using InvoiceProject.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceProject.Services;
 
@@ -19,8 +17,7 @@ public class InvoiceAttachmentService : IInvoiceAttachmentService
 
     public InvoiceAttachmentService(
         IInvoiceAttachmentRepository repository,
-        IFileStorage storage,
-        InvoiceDbContext context)
+        IFileStorage storage)
     {
         _repository = repository;
         _storage = storage;

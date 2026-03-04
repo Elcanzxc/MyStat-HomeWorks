@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using InvoiceProject.Abtractions.Interfaces;
-using InvoiceProject.DataAccess;
 using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,6 @@ public class InvoiceRowService : IInvoiceRowService
     public InvoiceRowService(
         IInvoiceRowRepository repository,
         IInvoiceRepository invoiceRepository,
-        InvoiceDbContext context,
         IMapper mapper,
         IHttpContextAccessor httpContextAccessor)
     {

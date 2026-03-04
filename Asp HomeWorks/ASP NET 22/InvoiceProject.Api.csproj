@@ -36,3 +36,9 @@
   </ItemGroup>
 
 </Project>
+
+
+
+<PackageReference Include="OpenIddict.AspNetCore" Version="7.2.0" />
+<PackageReference Include="OpenIddict.EntityFrameworkCore" Version="7.2.0" />
+<PackageReference Include="OpenIddict.Quartz" Version="7.2.0" />

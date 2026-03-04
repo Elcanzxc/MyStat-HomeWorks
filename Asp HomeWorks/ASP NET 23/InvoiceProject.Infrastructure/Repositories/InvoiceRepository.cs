@@ -40,21 +40,25 @@ public class InvoiceRepository : IInvoiceRepository
 
     public async Task Create(Invoice invoice)
     {
-        await _context.SaveChangesAsync();
+  
         await _context.Invoices.AddAsync(invoice);
+        await _context.SaveChangesAsync();
     }
 
     public async void Update(Invoice invoice)
     {
-        await _context.SaveChangesAsync();
+
         _context.Invoices.Update(invoice);
+        await _context.SaveChangesAsync();
     }
 
     public async Task Delete(Invoice invoice)
     {
         invoice.DeletedAt = DateTimeOffset.UtcNow;
-        await _context.SaveChangesAsync();
+      
         _context.Invoices.Remove(invoice);
+
+        await _context.SaveChangesAsync();
         await Task.CompletedTask;
     }
 

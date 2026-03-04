@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="../InvoiceProject.Application/InvoiceProject.Application.csproj" />
-  <Project Path="../InvoiceProject.Domain/InvoiceProject.Domain.csproj" />
-  <Project Path="../InvoiceProject.Infrastructure/InvoiceProject.Infrastructure.csproj" />
-  <Project Path="InvoiceProject.Api.csproj" />
-</Solution>

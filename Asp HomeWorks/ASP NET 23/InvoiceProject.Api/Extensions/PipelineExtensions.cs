@@ -1,4 +1,6 @@
-﻿using InvoiceProject.Middlewares;
+﻿
+
+using InvoiceProject.Middlewares;
 
 namespace InvoiceProject.Extensions;
 

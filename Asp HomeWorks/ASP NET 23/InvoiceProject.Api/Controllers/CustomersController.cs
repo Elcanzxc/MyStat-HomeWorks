@@ -1,103 +1,69 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
+using InvoiceProject.Application.Features.Customers.Commands;
+using InvoiceProject.Application.Features.Customers.Queries;
 using InvoiceProject.Common;
 using InvoiceProject.DTO;
 using InvoiceProject.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InvoiceProject.Controllers;
 
-[Authorize] 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CustomersController : ControllerBase
 {
-    private readonly ICustomerService _customerService;
+    private readonly IMediator _mediator;
 
-    public CustomersController(ICustomerService customerService)
-    {
-        _customerService = customerService;
-    }
+    public CustomersController(IMediator mediator) => _mediator = mediator;
+
+    private string CurrentUserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
     [HttpGet]
     public async Task<ActionResult<ApiResponse<IEnumerable<CustomerResponseDto>>>> GetAll()
     {
-      
-        var customers = await _customerService.GetAll();
-        return Ok(ApiResponse<IEnumerable<CustomerResponseDto>>.SuccessResponse(customers, "Returns the list of Customers successfully"));
+        var result = await _mediator.Send(new GetAllCustomersQuery(CurrentUserId));
+        return Ok(ApiResponse<IEnumerable<CustomerResponseDto>>.SuccessResponse(result, "Success"));
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ApiResponse<CustomerResponseDto>>> GetById(int id)
     {
-        var customer = await _customerService.GetById(id);
-        if (customer == null)
-            return NotFound(ApiResponse<CustomerResponseDto>.ErrorResponse($"Customer with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<CustomerResponseDto>.SuccessResponse(customer, "Customer found"));
-    }
-
-    [HttpGet("detailed")] 
-    public async Task<ActionResult<ApiResponse<IEnumerable<CustomerDetailsResponseDto>>>> GetAllDetailed()
-    {
-        var customers = await _customerService.GetAllDetailed();
-        return Ok(ApiResponse<IEnumerable<CustomerDetailsResponseDto>>.SuccessResponse(customers, "Returns the list of Customers successfully"));
-    }
-
-    [HttpGet("{id:int}/detailed")]
-    public async Task<ActionResult<ApiResponse<CustomerDetailsResponseDto>>> GetDetailedById(int id)
-    {
-        var customer = await _customerService.GetDetailedById(id);
-        if (customer == null)
-            return NotFound(ApiResponse<CustomerDetailsResponseDto>.ErrorResponse($"Customer with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<CustomerDetailsResponseDto>.SuccessResponse(customer, "Customer found"));
+        var result = await _mediator.Send(new GetByIdQuery(id, CurrentUserId));
+        return result != null
+            ? Ok(ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Found"))
+            : NotFound(ApiResponse<CustomerResponseDto>.ErrorResponse("Not found"));
     }
 
     [HttpPost]
     public async Task<ActionResult<ApiResponse<CustomerResponseDto>>> Create([FromBody] CustomerRequestDto dto)
     {
-     
-        var result = await _customerService.Create(dto);
-        var response = ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Customer created successfully");
-
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, response);
+        var result = await _mediator.Send(new CreateCustomerCommand(dto, CurrentUserId));
+        return CreatedAtAction(nameof(GetById), new { id = result.Id },
+            ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Created"));
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult<ApiResponse<CustomerResponseDto>>> Update(int id, [FromBody] CustomerUpdateDto dto)
     {
-        var result = await _customerService.Update(id, dto);
-        if (result == null)
-            return NotFound(ApiResponse<CustomerResponseDto>.ErrorResponse($"Customer with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Customer updated successfully"));
+        var result = await _mediator.Send(new UpdateCustomerCommand(id, dto, CurrentUserId));
+        return result != null ? Ok(ApiResponse<CustomerResponseDto>.SuccessResponse(result, "Updated")) : NotFound();
     }
 
     [HttpDelete("{id:int}/archive")]
     public async Task<ActionResult<ApiResponse<bool>>> SoftDelete(int id)
     {
-        var success = await _customerService.SoftDeleteAsync(id);
-        if (!success)
-            return NotFound(ApiResponse<bool>.ErrorResponse($"Customer with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<bool>.SuccessResponse(true, "Customer archived successfully"));
-    }
-
-    [HttpDelete("{id:int}/hard-delete")]
-    public async Task<ActionResult<ApiResponse<bool>>> HardDelete(int id)
-    {
-        var success = await _customerService.HardDeleteAsync(id);
-        if (!success)
-            return NotFound(ApiResponse<bool>.ErrorResponse($"Customer with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<bool>.SuccessResponse(true, "Customer permanently deleted"));
+        var success = await _mediator.Send(new DeleteCustomerCommand(id, CurrentUserId, IsHardDelete: false));
+        return success ? Ok(ApiResponse<bool>.SuccessResponse(true, "Archived")) : NotFound();
     }
 
     [HttpGet("paged")]
     public async Task<ActionResult<ApiResponse<PagedResult<CustomerResponseDto>>>> GetPaged([FromQuery] CustomerQueryParams queryParams)
     {
-        var result = await _customerService.GetPagedAsync(queryParams);
-        return Ok(ApiResponse<PagedResult<CustomerResponseDto>>.SuccessResponse(result, "Customers retrieved successfully"));
+        var result = await _mediator.Send(new GetCustomerPagedQuery(queryParams, CurrentUserId));
+        return Ok(ApiResponse<PagedResult<CustomerResponseDto>>.SuccessResponse(result, "Success"));
     }
 }

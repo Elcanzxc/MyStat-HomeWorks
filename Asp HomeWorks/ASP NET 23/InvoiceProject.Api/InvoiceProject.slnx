@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="InvoiceProject.csproj" />
+  <Project Path="../InvoiceProject.Application/InvoiceProject.Application.csproj" Id="9a750616-5e35-47f5-995f-f4e9e3b9107f" />
+  <Project Path="../InvoiceProject.Domain/InvoiceProject.Domain.csproj" Id="2f47096a-428c-434f-8fdb-b5d57714e259" />
+  <Project Path="../InvoiceProject.Infrastructure/InvoiceProject.Infrastructure.csproj" Id="967da15d-d736-458c-b48f-2646c14a0f76" />
+  <Project Path="InvoiceProject.Api.csproj" />
 </Solution>

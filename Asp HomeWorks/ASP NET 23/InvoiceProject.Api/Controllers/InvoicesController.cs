@@ -1,6 +1,9 @@
 ﻿using InvoiceProject.Abtractions.Interfaces;
+using InvoiceProject.Application.Features.Invoice.Commands;
+using InvoiceProject.Application.Features.Invoice.Query;
 using InvoiceProject.Common;
 using InvoiceProject.DTO;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,104 +15,53 @@ namespace InvoiceProject.Controllers;
 [Route("api/[controller]")]
 public class InvoicesController : ControllerBase
 {
-    private readonly IInvoiceService _invoiceService;
-    private readonly IInvoiceExportService _exportService;
-    private readonly string _currentUserId;
-    public InvoicesController(IInvoiceService invoiceService, IInvoiceExportService exportService,IHttpContextAccessor accessor) 
-    {
-        _invoiceService = invoiceService;
-        _exportService = exportService;
-        _currentUserId = accessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)!;
-    }
+    private readonly IMediator _mediator;
 
-    [HttpGet]
-    public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceResponseDto>>>> GetAll()
-    {
-       
-        var result = await _invoiceService.GetAll();
-        return Ok(ApiResponse<IEnumerable<InvoiceResponseDto>>.SuccessResponse(result, "Invoices retrieved successfully"));
-    }
+    public InvoicesController(IMediator mediator) => _mediator = mediator;
+
+    private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ApiResponse<InvoiceResponseDto>>> GetById(int id)
     {
-        var result = await _invoiceService.GetById(id);
-        if (result == null)
-            return NotFound(ApiResponse<InvoiceResponseDto>.ErrorResponse($"Invoice with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Invoice found"));
+        var result = await _mediator.Send(new GetInvoiceByIdQuery(id, UserId));
+        return result != null
+            ? Ok(ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Invoice found"))
+            : NotFound(ApiResponse<InvoiceResponseDto>.ErrorResponse("Invoice not found"));
     }
 
     [HttpPost]
     public async Task<ActionResult<ApiResponse<InvoiceResponseDto>>> Create([FromBody] InvoiceRequestDto dto)
     {
-      
-        var result = await _invoiceService.Create(dto);
-        var response = ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Invoice created successfully");
-
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, response);
-    }
-
-    [HttpPut("{id:int}")]
-    public async Task<ActionResult<ApiResponse<InvoiceResponseDto>>> Update(int id, [FromBody] InvoiceUpdateDto dto)
-    {
-        var result = await _invoiceService.Update(id, dto);
-        if (result == null)
-            return NotFound(ApiResponse<InvoiceResponseDto>.ErrorResponse($"Invoice with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Invoice updated successfully"));
+        var result = await _mediator.Send(new CreateInvoiceCommand(dto, UserId));
+        return CreatedAtAction(nameof(GetById), new { id = result.Id },
+            ApiResponse<InvoiceResponseDto>.SuccessResponse(result, "Created successfully"));
     }
 
     [HttpPatch("{id:int}/status")]
-    public async Task<ActionResult<ApiResponse<bool>>> UpdateStatus(int id, [FromBody] InvoiceUpdateStatusDto statusDto)
+    public async Task<ActionResult<ApiResponse<bool>>> UpdateStatus(int id, [FromBody] InvoiceUpdateStatusDto dto)
     {
-        var success = await _invoiceService.UpdateStatus(id, statusDto.Status);
-        if (!success)
-            return NotFound(ApiResponse<bool>.ErrorResponse($"Invoice with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<bool>.SuccessResponse(true, $"Status changed to {statusDto.Status}"));
-    }
-
-    [HttpDelete("{id:int}/archive")]
-    public async Task<ActionResult<ApiResponse<bool>>> SoftDelete(int id)
-    {
-        var success = await _invoiceService.SoftDelete(id);
-        if (!success)
-            return NotFound(ApiResponse<bool>.ErrorResponse($"Invoice with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<bool>.SuccessResponse(true, "Invoice archived successfully"));
-    }
-
-    [HttpDelete("{id:int}/hard-delete")]
-    public async Task<ActionResult<ApiResponse<bool>>> HardDelete(int id)
-    {
-        var success = await _invoiceService.HardDelete(id);
-        if (!success)
-            return NotFound(ApiResponse<bool>.ErrorResponse($"Invoice with ID {id} not found or access denied"));
-
-        return Ok(ApiResponse<bool>.SuccessResponse(true, "Invoice permanently deleted"));
-    }
-
-    [HttpGet("paged")]
-    public async Task<ActionResult<ApiResponse<PagedResult<InvoiceResponseDto>>>> GetPaged([FromQuery] InvoiceQueryParams queryParams)
-    {
-        var result = await _invoiceService.GetPagedAsync(queryParams);
-        return Ok(ApiResponse<PagedResult<InvoiceResponseDto>>.SuccessResponse(result, "Invoices retrieved successfully"));
+        var success = await _mediator.Send(new UpdateInvoiceStatusCommand(id, dto.Status, UserId));
+        return success
+            ? Ok(ApiResponse<bool>.SuccessResponse(true, "Status updated"))
+            : NotFound(ApiResponse<bool>.ErrorResponse("Invoice not found"));
     }
 
     [HttpGet("{id}/download/pdf")]
     public async Task<IActionResult> DownloadPdf(int id)
     {
-        try
-        {
-            var pdfBytes = await _exportService.GeneratePdfAsync(id, _currentUserId);
-            var fileName = $"Invoice_{id}_{DateTime.Now:yyyyMMdd}.pdf";
+        var result = await _mediator.Send(new DownloadInvoicePdfQuery(id, UserId));
+        if (result == null) return NotFound();
 
-            return File(pdfBytes, "application/pdf", fileName);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        return File(result.Value.Bytes, "application/pdf", result.Value.FileName);
     }
+
+    [HttpGet("paged")]
+    public async Task<ActionResult<ApiResponse<PagedResult<InvoiceResponseDto>>>> GetPaged([FromQuery] InvoiceQueryParams q)
+    {
+        var result = await _mediator.Send(new GetInvoicesPagedQuery(q, UserId));
+        return Ok(ApiResponse<PagedResult<InvoiceResponseDto>>.SuccessResponse(result, "Success"));
+    }
+
+    
 }

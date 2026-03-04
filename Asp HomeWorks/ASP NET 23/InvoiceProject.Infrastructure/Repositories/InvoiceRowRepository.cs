@@ -36,8 +36,9 @@ public class InvoiceRowRepository : IInvoiceRowRepository
 
     public async Task AddRow(InvoiceRow row)
     {
-        await _context.SaveChangesAsync();
+ 
         await _context.InvoiceRows.AddAsync(row);
+        await _context.SaveChangesAsync();
     }
 
     public async Task Delete(InvoiceRow row)

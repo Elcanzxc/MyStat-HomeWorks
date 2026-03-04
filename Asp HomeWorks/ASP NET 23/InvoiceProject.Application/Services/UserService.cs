@@ -1,18 +1,21 @@
 ﻿using AutoMapper;
 using InvoiceProject.Abtractions.Interfaces;
 using InvoiceProject.Config;
-using InvoiceProject.DataAccess;
 using InvoiceProject.DTO;
 using InvoiceProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.PortableExecutable;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+
+
 
 namespace InvoiceProject.Services;
 
@@ -89,8 +92,8 @@ public class UserService : IUsersService
 
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.Id),
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim("FirstName", user.FirstName)
         };

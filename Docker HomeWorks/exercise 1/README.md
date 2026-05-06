@@ -42,5 +42,10 @@ This project is a demonstration of containerizing a modern React application usi
    docker push <your-username>/react-docker-hw:latest
    ```
 
+## Links
+- **GitHub Repository**: [View on GitHub](https://github.com/Elcanzxc/MyStat-HomeWorks/tree/main/Docker%20HomeWorks/exercise%201)
+- **Docker Hub Image**: [View on Docker Hub](https://hub.docker.com/r/elcanzxc/react-docker-hw)
+
 ---
 *Created for MyStat Homework.*
+

@@ -1,65 +1,104 @@
 import './index.css';
 
-const FeatureCard = ({ title, description, icon }: { title: string; description: string; icon: string }) => (
-  <div className="glass p-8 hover:scale-105 transition-transform duration-300 animate-fade-in">
-    <div className="text-4xl mb-4">{icon}</div>
-    <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <p className="text-slate-400">{description}</p>
+interface Painting {
+  title: string;
+  artist: string;
+  year: string;
+  url: string;
+  description: string;
+}
+
+const paintings: Painting[] = [
+  {
+    title: "The Starry Night",
+    artist: "Vincent van Gogh",
+    year: "1889",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    description: "A dreamlike interpretation of the artist's asylum room view, featuring a swirling night sky."
+  },
+  {
+    title: "Mona Lisa",
+    artist: "Leonardo da Vinci",
+    year: "1503",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+    description: "The world's most famous portrait, known for the subject's enigmatic expression."
+  },
+  {
+    title: "The Great Wave",
+    artist: "Katsushika Hokusai",
+    year: "1831",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Great_Wave_off_Kanagawa2.jpg/1280px-Great_Wave_off_Kanagawa2.jpg",
+    description: "A masterpiece of Japanese ukiyo-e art, depicting a giant wave threatening boats."
+  },
+  {
+    title: "Girl with a Pearl Earring",
+    artist: "Johannes Vermeer",
+    year: "1665",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Johannes_Vermeer_%281632-1675%29_-_The_Girl_With_The_Pearl_Earring_%281665%29.jpg/800px-Johannes_Vermeer_%281632-1675%29_-_The_Girl_With_The_Pearl_Earring_%281665%29.jpg",
+    description: "Often called the 'Mona Lisa of the North', this painting focuses on light and texture."
+  },
+  {
+    title: "The Night Watch",
+    artist: "Rembrandt",
+    year: "1642",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Night_Watch_-_HD.jpg/1280px-The_Night_Watch_-_HD.jpg",
+    description: "A monumental group portrait famous for its colossal size and dramatic use of light."
+  },
+  {
+    title: "The Kiss",
+    artist: "Gustav Klimt",
+    year: "1907",
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/The_Kiss_-_Gustav_Klimt_-_Google_Art_Project.jpg/800px-The_Kiss_-_Gustav_Klimt_-_Google_Art_Project.jpg",
+    description: "A symbolist masterpiece from Klimt's 'Golden Phase', depicting a couple entwined in love."
+  }
+];
+
+const PaintingCard = ({ painting }: { painting: Painting }) => (
+  <div className="painting-card">
+    <div className="painting-frame">
+      <div className="painting-img-wrapper">
+        <img src={painting.url} alt={painting.title} className="painting-img" />
+        <div className="spotlight"></div>
+      </div>
+    </div>
+    <div className="painting-info">
+      <div className="painting-artist">{painting.artist}, {painting.year}</div>
+      <h3 className="painting-title">{painting.title}</h3>
+      <p className="painting-desc">{painting.description}</p>
+    </div>
   </div>
 );
 
 function App() {
   return (
-    <div className="gradient-bg min-h-screen">
-      <nav className="container py-6 flex justify-between items-center">
-        <div className="text-2xl font-black tracking-tighter gradient-text">DOCKERIZED</div>
-        <div className="flex gap-8 text-sm font-medium text-slate-300">
-          <a href="#" className="hover:text-white transition-colors">Home</a>
-          <a href="#" className="hover:text-white transition-colors">About</a>
-          <a href="#" className="hover:text-white transition-colors">Container</a>
-        </div>
-      </nav>
-
-      <main className="container pt-20 pb-32">
-        <section className="text-center max-w-3xl mx-auto mb-24">
-          <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight animate-fade-in">
-            React App <span className="gradient-text">In Docker</span>
-          </h1>
-          <p className="text-xl text-slate-400 mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            A premium demonstration of containerized frontend architecture. Built with Vite, 
-            optimized for production, and served through Nginx.
+    <div className="museum-container">
+      <header className="hero-museum">
+        <div style={{ maxWidth: '800px' }}>
+          <h1 style={{ fontSize: '5rem', marginBottom: '1rem', fontWeight: 900 }}>GRAND GALLERY</h1>
+          <p style={{ fontSize: '1.2rem', letterSpacing: '4px', textTransform: 'uppercase', color: 'var(--gold)' }}>
+            Virtual Exhibition of Eternal Masterpieces
           </p>
-          <div className="flex gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg shadow-indigo-500/20">
-              Get Started
-            </button>
-            <button className="glass px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all">
-              View Source
-            </button>
-          </div>
-        </section>
+          <button className="gold-btn">Explore Collection</button>
+        </div>
+      </header>
 
-        <section className="grid md:grid-cols-3 gap-8">
-          <FeatureCard 
-            icon="🚀" 
-            title="Fast Build" 
-            description="Vite provides the fastest development environment and optimized production bundles."
-          />
-          <FeatureCard 
-            icon="🐳" 
-            title="Dockerized" 
-            description="Multi-stage builds ensure small image sizes and secure production environments."
-          />
-          <FeatureCard 
-            icon="🌐" 
-            title="Scalable" 
-            description="Easily deployable to any cloud provider or container orchestration system."
-          />
-        </section>
+      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '100px 2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '20px' }}>Most Celebrated Works</h2>
+          <div style={{ width: '60px', height: '2px', background: 'var(--gold)', margin: '0 auto' }}></div>
+        </div>
+
+        <div className="museum-grid">
+          {paintings.map((p, i) => (
+            <PaintingCard key={i} painting={p} />
+          ))}
+        </div>
       </main>
 
-      <footer className="container py-12 border-t border-white/10 text-center text-slate-500 text-sm">
-        <p>© 2024 Dockerized React App. Built with ❤️ for MyStat Homework.</p>
+      <footer style={{ padding: '80px 2rem', borderTop: '1px solid #222', textAlign: 'center', color: '#555' }}>
+        <p style={{ letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.8rem' }}>
+          © 2024 Digital Art Preservation • Virtual Museum Project
+        </p>
       </footer>
     </div>
   );

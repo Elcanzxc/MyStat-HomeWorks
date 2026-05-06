@@ -1,14 +1,15 @@
 :root {
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --bg-dark: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent: #ec4899;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --gold: #c5a059;
+  --gold-hover: #e2c28d;
+  --bg-black: #0a0a0a;
+  --bg-surface: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600;800&display=swap');
 
 * {
   margin: 0;
@@ -17,54 +18,123 @@
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  line-height: 1.5;
+  background-color: var(--bg-black);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  min-height: 100vh;
+h1, h2, h3 {
+  font-family: var(--font-serif);
+}
+
+.museum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 3rem;
+  padding: 2rem 0;
+}
+
+.painting-card {
+  position: relative;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+.painting-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(197, 160, 89, 0.15);
+}
+
+.painting-frame {
+  padding: 15px;
+  background: #111;
+  border: 1px solid #333;
+}
+
+.painting-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.painting-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.painting-card:hover .painting-img {
+  transform: scale(1.1);
+}
+
+.painting-info {
+  padding: 1.5rem;
+  border-top: 1px solid #222;
+}
+
+.painting-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+}
+
+.painting-artist {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.painting-desc {
+  font-size: 0.85rem;
+  color: #777;
+  line-height: 1.6;
+}
+
+.hero-museum {
+  height: 80vh;
   display: flex;
   flex-direction: column;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.2), var(--bg-black)),
+              url('https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop') center/cover;
   padding: 0 2rem;
 }
 
-/* Gradients */
-.gradient-text {
-  background: linear-gradient(135deg, #818cf8 0%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.gold-btn {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 1rem 2.5rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
 }
 
-.gradient-bg {
-  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent),
-              radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.1), transparent);
+.gold-btn:hover {
+  background: var(--gold);
+  color: var(--bg-black);
 }
 
-/* Glassmorphism */
-.glass {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1.5rem;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+.spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
 }

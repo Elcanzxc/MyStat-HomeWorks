@@ -1,29 +1,40 @@
-import { View,Text,StyleSheet } from "react-native";
 
+import { Button, View ,Text, StyleSheet,Image, Pressable} from "react-native"
+import { useState  } from "react"
 
-
-
-function ProfileCard({name,city,progLanguage,style,dx}){
-
+export default function ProfileCard({name,role,url}){
+   const [active, setActive] = useState(false)
 
     return (
 
-        <View style={[styles.card,style]}>
+   <Pressable onPress={() => {setActive(!active)}}>
+        <View style={[styles.card , {borderColor:active? 'green':'black'}]}>
 
-            <Text>My name is: {name} , and I live in {city} </Text>
-            <Text>My favorite programming language is :{progLanguage}</Text>
+            
+              
+               <Text> {name}</Text>
+               <Text> {role}</Text>
+               <Image source={{ uri: url }} style={styles.image} />
+               {active ? <Text>✓ Выбрано</Text>: <Text> </Text>}
 
+            
+      
         </View>
+    </Pressable>
     )
 }
 
-
 const styles = StyleSheet.create({
-     
-    card:{
-        borderWidth:2,
-        borderColor: 'black',
-        backgroundColor: 'yellow'
-    }
-})
-export default ProfileCard
+  card: {
+    borderWidth: 2,
+    padding: 25,
+    paddingVertical: 50,
+    borderRadius: 20,
+    borderColor: "black",
+  },
+
+  image: {
+    width: 100,
+    height: 100,
+  },
+});

@@ -1,40 +1,45 @@
+import { StyleSheet, View, Text, Image } from "react-native";
 
-import { Button, View ,Text, StyleSheet,Image, Pressable} from "react-native"
-import { useState  } from "react"
-
-export default function ProfileCard({name,role,url}){
-   const [active, setActive] = useState(false)
-
-    return (
-
-   <Pressable onPress={() => {setActive(!active)}}>
-        <View style={[styles.card , {borderColor:active? 'green':'black'}]}>
-
-            
-              
-               <Text> {name}</Text>
-               <Text> {role}</Text>
-               <Image source={{ uri: url }} style={styles.image} />
-               {active ? <Text>✓ Выбрано</Text>: <Text> </Text>}
-
-            
-      
-        </View>
-    </Pressable>
-    )
+export default function ProfileCard({ name, age, selected }) {
+  return (
+    <View>
+      <View style={[styles.card, selected && styles.selectedCard]}>
+        <Image
+          source={{
+            uri: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 10) + 1}`,
+          }}
+          style={styles.avatar}
+        />
+        <Text style={styles.text}>Name:{name}</Text>
+        <Text style={styles.text}>Age:{age}</Text>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  container: {},
   card: {
-    borderWidth: 2,
-    padding: 25,
-    paddingVertical: 50,
-    borderRadius: 20,
-    borderColor: "black",
+    borderWidth: 1,
+    width: 160,
+    height: 180,
+    borderColor: "#034569",
+    backgroundColor: "#086CA2",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
   },
-
-  image: {
+  avatar: {
     width: 100,
     height: 100,
+    borderRadius: 15,
+  },
+  text: {
+    fontSize: 22,
+    color: "white",
+  },
+  selectedCard: {
+    borderColor: "yellow",
+    borderWidth: 4,
   },
 });

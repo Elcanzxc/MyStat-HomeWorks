@@ -36,7 +36,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-## Revelidate = 30
-
-меньше нет смысла , не стоит излишне нагружать сервер
-а больше уже вкусовщина , слишком большой отрезок уже не такой показатель динамичности сайта
+## 30 секунд revalidate
+не меньше потому что это блог, не стоит нагружать излишне сервер , мы онлайн чат создаем
+не больше, потому что теряется эффект динамичности, вдруг в будушем добавятся новые блоги, а они не так быстро появятся на сайте 

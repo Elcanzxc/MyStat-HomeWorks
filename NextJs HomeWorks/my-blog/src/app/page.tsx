@@ -1,7 +1,7 @@
 import LastUpdated from "@/components/LastUpdated";
 import LikeArticleButton from "@/components/LikeArticleButton.tsx";
 
-export const revalidate = 10;
+export const revalidate = 30;
 
 export default function Home() {
   return (

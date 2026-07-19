@@ -1,0 +1,33 @@
+.wrapper {
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+}
+
+
+.title {
+
+font-size:40px;
+
+color:#dc2626;
+
+margin-bottom:15px;
+
+}
+
+
+.text {
+
+font-size:18px;
+
+color:#6b7280;
+
+}

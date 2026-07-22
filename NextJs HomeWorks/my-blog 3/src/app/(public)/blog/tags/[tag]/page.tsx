@@ -3,28 +3,7 @@ import { notFound } from "next/navigation";
 import styles from "./page.module.css";
 import Link from "next/link";
 
-const blog = [
-  {
-    id: 1,
-    title: "Статья №1",
-    text: "Сегодня мы расскажем о новых технологиях, которые помогают сделать повседневные задачи проще и эффективнее.",
-    tags: ["nextjs", "react"],
-  },
-
-  {
-    id: 2,
-    title: "Статья №2",
-    text: "В этом посте делимся полезными советами по развитию навыков, организации времени и поиску вдохновения.",
-    tags: ["javascript", "react"],
-  },
-
-  {
-    id: 3,
-    title: "Статья №3",
-    text: "Интересные идеи появляются тогда, когда мы экспериментируем и пробуем что-то новое.",
-    tags: ["design", "frontend"],
-  },
-];
+import { blog } from "@/data/blog";
 
 
 export default async function TagPage({
@@ -36,9 +15,7 @@ export default async function TagPage({
 
   const { tag } = await params;
 
-const posts = blog.filter((item) => {
-  item.tags.includes(tag);
-});
+const posts = blog.filter((item) => item.tags.includes(tag));
 
   if (!tag || tag.length === 0) {
     notFound();
@@ -50,7 +27,7 @@ const posts = blog.filter((item) => {
 
       <ul>
         {posts.map((item) => (
-          <li className={styles.text}>
+          <li key={item.id} className={styles.text}>
             <Link href={`/blog/${item.id}`}>{item.title}</Link>
           </li>
         ))}

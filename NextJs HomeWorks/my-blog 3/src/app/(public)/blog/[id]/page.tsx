@@ -3,28 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import SimilarArticles from "./SimilarArticles";
 
-const blog = [
-  {
-    id: 1,
-    title: "Статья №1",
-    text: "Сегодня мы расскажем о новых технологиях, которые помогают сделать повседневные задачи проще и эффективнее.",
-    tags: ["nextjs", "react"],
-  },
-
-  {
-    id: 2,
-    title: "Статья №2",
-    text: "В этом посте делимся полезными советами по развитию навыков, организации времени и поиску вдохновения.",
-    tags: ["javascript", "react"],
-  },
-
-  {
-    id: 3,
-    title: "Статья №3",
-    text: "Интересные идеи появляются тогда, когда мы экспериментируем и пробуем что-то новое.",
-    tags: ["design", "frontend"],
-  },
-];
+import { blog } from "@/data/blog";
 
 export default async function BlogPage({
   params,

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Programmin%20projects/Github%20zadaniya/MyStat%20HomeWorks/NextJs%20HomeWorks/my-blog/app/%28public%29/blog/%5Bid%5D/loading.tsx"],"sourcesContent":["export default function Loading() {\r\n  return (\r\n    <div>Загружаем статьи блога...</div>\r\n  )\r\n}\r\n"],"names":["Loading"],"mappings":";;;;;;AAAe,SAASA;IACtB,qBACE,8OAAC;kBAAI;;;;;;AAET"}}]
+}

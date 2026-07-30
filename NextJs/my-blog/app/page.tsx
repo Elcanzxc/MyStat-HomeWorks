@@ -1,4 +1,5 @@
-import Image from "next/image";
+import LikeArticleButton from "@/src/components/LikeArticleButton.tsx";
+
 
 const articles = [
   {
@@ -42,16 +43,25 @@ const articles = [
   },
 ];
 
+export const revalidate = 30;
+
 export default function Home() {
   return (
+
     <div>
       {articles.map((item) => (
-        <div>
+        <div key={item.id}>
           <br></br>
           <h1>{item.id}:{item.title}</h1> 
           <p>{item.content}</p>
+          <LikeArticleButton/>
         </div>
       ))}
+
+      <p>Последнее обновление было в:{new Date().toLocaleTimeString('ru-RU')}</p>
     </div>
   );
 }
+
+// Выбрал ISR , ведь блоги могут увеличиватся( в продакшене), SSG не подходит
+// Через каждый запрос чекать блоги нет смысла , SSR не подходит

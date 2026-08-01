@@ -1,3 +1,4 @@
+
 import LikeArticleButton from "@/src/components/LikeArticleButton";
 import { articles } from "@/src/utils";
 import Link from "next/link";
@@ -32,7 +33,6 @@ export default function Home() {
                   {item.title}
                 </Link>
               </h3>
-
               <p className="text-slate-600 text-sm line-clamp-3 mb-4">
                 {item.description}
               </p>
@@ -50,3 +50,14 @@ export default function Home() {
 
 // Выбрал ISR , ведь блоги могут увеличиватся( в продакшене), SSG не подходит
 // Через каждый запрос чекать блоги нет смысла , SSR не подходит
+
+
+
+
+  //   const sameArticles = articles.filter((item) =>
+  //   item.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
+  //   );
+  // console.log(sameArticles)
+  //   if (sameArticles.length === 0) {
+  //   notFound();
+  //   }

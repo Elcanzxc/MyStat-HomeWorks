@@ -1,8 +1,7 @@
-import 'tailwindcss'
-
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+export default function TagBadge({ text }: { text: string }) {
+  return (
+    <span className="bg-tag-bg text-tag-text dark:bg-tag-bg-dark dark:text-tag-text-dark px-2.5 py-1 rounded-md text-xs font-semibold inline-block">
+      {text}
+    </span>
+  );
 }

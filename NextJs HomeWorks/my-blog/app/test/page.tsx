@@ -1,6 +1,9 @@
+'use client'
+
 import SuspenseDelay from "@/src/components/SuspenseDelay";
 import { delay } from "@/src/utils";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+
 
 // export const revalidate = 10
 
@@ -8,7 +11,7 @@ import { Suspense } from "react";
 //   return new Promise(resolve => setTimeout(resolve,2000))
 // }
 
-export default async function page() {
+export default  function page() {
   // const [time,setTime] = useState<string | null>(null);
 
   // useEffect(() =>{
@@ -20,16 +23,39 @@ export default async function page() {
 
   // await delay()
 
-  const [salam,sagol] = await Promise.all([delay(3000),delay(10000)])
+  // const [salam,sagol] = await Promise.all([delay(3000),delay(10000)])
 
+   
+  const [text,setText] = useState('')
+
+  const  add = async() =>{
+   const request = await fetch('/test/api/apiTest',{method:'POST',body:JSON.stringify({text})})
+   setText('')
+   get()
+  }
+
+
+  const [data,setData] = useState<{id:String,text:String | null}[]>()
+  const get = async () =>{
+    const response = await fetch('/test/api/apiTest')
+    const responseJson = await response.json()
+    setData(responseJson)
+  }
   return (
     <div>
-      <Suspense fallback={<div>Shas pokaju...</div>}>
+
+      <input value={text} onChange={(e) => setText(e.target.value)} placeholder="vvodi text"></input>
+      <button onClick={add}>otrpavit</button>
+      <div>
+       {data?.map((item) => <p>{item.id} : {item.text}</p>)}
+      </div>
+
+      {/* <Suspense fallback={<div>Shas pokaju...</div>}>
         <SuspenseDelay ms={3000} />
       </Suspense>
       <Suspense fallback={<div>Shas pokaju...</div>}>
         <SuspenseDelay ms={1000} />
-      </Suspense>
+      </Suspense> */}
 
       
       {/* <p>Текущий путь:{path}</p>

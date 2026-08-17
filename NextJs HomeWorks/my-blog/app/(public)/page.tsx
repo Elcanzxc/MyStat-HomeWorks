@@ -1,12 +1,19 @@
 
+import Comments from "@/src/components/Comments";
 import LikeArticleButton from "@/src/components/LikeArticleButton";
+import ShowComments from "@/src/components/ShowComments";
 import TagBadge from "@/src/components/TagBadge/TagBadge";
+import ToggleButton from "@/src/components/ToggleButton";
 import { articles } from "@/src/utils";
 import Link from "next/link";
 
 export const revalidate = 30;
 
 export default function Home() {
+
+   
+
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
@@ -50,20 +57,15 @@ export default function Home() {
           </div>
         ))}
       </div>
+ 
     </div>
   );
-}
+}c
 
 // Выбрал ISR , ведь блоги могут увеличиватся( в продакшене), SSG не подходит
 // Через каждый запрос чекать блоги нет смысла , SSR не подходит
 
 
 
-
-  //   const sameArticles = articles.filter((item) =>
-  //   item.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
-  //   );
-  // console.log(sameArticles)
-  //   if (sameArticles.length === 0) {
-  //   notFound();
-  //   }
+// Список статей fetch а не use swr потому что это статичные вещи, просто статья которую получил чтобы читать
+// если бы нам нужно было эти статьи обновлять на клиенте то уже был бы useSwr

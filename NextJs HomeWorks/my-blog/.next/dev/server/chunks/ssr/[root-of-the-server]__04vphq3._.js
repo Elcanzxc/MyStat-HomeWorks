@@ -67,14 +67,23 @@ __turbopack_context__.s([
     ()=>TagBadge
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.react-server.js [app-rsc] (ecmascript)");
+;
 ;
 function TagBadge({ text }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
         className: "bg-tag-bg text-tag-text dark:bg-tag-bg-dark dark:text-tag-text-dark px-2.5 py-1 rounded-md text-xs font-semibold inline-block",
-        children: text
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
+            href: `/blog/tags/${text}`,
+            children: text
+        }, void 0, false, {
+            fileName: "[project]/src/components/TagBadge/TagBadge.tsx",
+            lineNumber: 6,
+            columnNumber: 7
+        }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/TagBadge/TagBadge.tsx",
-        lineNumber: 3,
+        lineNumber: 5,
         columnNumber: 5
     }, this);
 }
@@ -275,7 +284,7 @@ function Home() {
                         children: "Последние записи"
                     }, void 0, false, {
                         fileName: "[project]/app/(public)/page.tsx",
-                        lineNumber: 13,
+                        lineNumber: 20,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -289,13 +298,13 @@ function Home() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(public)/page.tsx",
-                        lineNumber: 14,
+                        lineNumber: 21,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(public)/page.tsx",
-                lineNumber: 12,
+                lineNumber: 19,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -316,7 +325,7 @@ function Home() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(public)/page.tsx",
-                                                lineNumber: 27,
+                                                lineNumber: 34,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -325,18 +334,18 @@ function Home() {
                                                         text: tag
                                                     }, tag, false, {
                                                         fileName: "[project]/app/(public)/page.tsx",
-                                                        lineNumber: 32,
+                                                        lineNumber: 39,
                                                         columnNumber: 21
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(public)/page.tsx",
-                                                lineNumber: 30,
+                                                lineNumber: 37,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(public)/page.tsx",
-                                        lineNumber: 26,
+                                        lineNumber: 33,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -350,19 +359,19 @@ function Home() {
                                                     "aria-hidden": "true"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(public)/page.tsx",
-                                                    lineNumber: 38,
+                                                    lineNumber: 45,
                                                     columnNumber: 19
                                                 }, this),
                                                 item.title
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(public)/page.tsx",
-                                            lineNumber: 37,
+                                            lineNumber: 44,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(public)/page.tsx",
-                                        lineNumber: 36,
+                                        lineNumber: 43,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -370,53 +379,48 @@ function Home() {
                                         children: item.description
                                     }, void 0, false, {
                                         fileName: "[project]/app/(public)/page.tsx",
-                                        lineNumber: 42,
+                                        lineNumber: 49,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(public)/page.tsx",
-                                lineNumber: 25,
+                                lineNumber: 32,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "relative z-10 pt-4 border-t border-slate-100 dark:border-slate-700 mt-auto",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$LikeArticleButton$2f$index$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                     fileName: "[project]/app/(public)/page.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 55,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(public)/page.tsx",
-                                lineNumber: 47,
+                                lineNumber: 54,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, item.id, true, {
                         fileName: "[project]/app/(public)/page.tsx",
-                        lineNumber: 21,
+                        lineNumber: 28,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/(public)/page.tsx",
-                lineNumber: 19,
+                lineNumber: 26,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(public)/page.tsx",
-        lineNumber: 11,
+        lineNumber: 18,
         columnNumber: 5
     }, this);
 } // Выбрал ISR , ведь блоги могут увеличиватся( в продакшене), SSG не подходит
  // Через каждый запрос чекать блоги нет смысла , SSR не подходит
- //   const sameArticles = articles.filter((item) =>
- //   item.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
- //   );
- // console.log(sameArticles)
- //   if (sameArticles.length === 0) {
- //   notFound();
- //   }
+ // Список статей fetch а не use swr потому что это статичные вещи, просто статья которую получил чтобы читать
+ // если бы нам нужно было эти статьи обновлять на клиенте то уже был бы useSwr
 }),
 "[project]/app/(public)/page.tsx [app-rsc] (ecmascript, Next.js Server Component)", ((__turbopack_context__) => {
 

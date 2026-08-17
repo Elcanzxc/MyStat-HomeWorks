@@ -1,4 +1,5 @@
 {
   "/(public)/blog/[id]/page": "app/(public)/blog/[id]/page.js",
-  "/(public)/page": "app/(public)/page.js"
+  "/(public)/page": "app/(public)/page.js",
+  "/api/onlineCount/route": "app/api/onlineCount/route.js"
 }

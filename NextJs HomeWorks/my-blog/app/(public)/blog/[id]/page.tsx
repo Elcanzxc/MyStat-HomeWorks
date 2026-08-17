@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import SameArticles from "./SameArticles";
 import { Suspense } from "react";
 import TagBadge from "@/src/components/TagBadge/TagBadge";
+import BlogOnline from "./BlogOnline";
+import ShowComments from "@/src/components/ShowComments";
 
 export async function generateStaticParams() {
   return [{ id: "1" }, { id: "2" }, { id: "3" }];
@@ -23,6 +25,9 @@ export default async function BlogPage({ params,}: {params: Promise<{ id: string
     <div>
       <article className="max-w-2xl mx-auto">
         <header className="mb-8 text-center">
+          <div>
+            <BlogOnline/>
+          </div>
           <div className="flex gap-2 justify-center mb-4">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 px-2.5 py-1 rounded-md">
               Запись #{id}
@@ -55,6 +60,8 @@ export default async function BlogPage({ params,}: {params: Promise<{ id: string
         }>
           <SameArticles article={article} />
         </Suspense>
+             
+       <ShowComments/>
       </div>
     </div>
   );

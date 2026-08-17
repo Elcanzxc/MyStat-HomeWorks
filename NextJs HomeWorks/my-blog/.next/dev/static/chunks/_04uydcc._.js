@@ -17,11 +17,11 @@ var _s = __turbopack_context__.k.signature();
 function LikeArticleButton() {
     _s();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(5);
-    if ($[0] !== "6c1d5573968bb9a614c5ac5582c93c0fb089f1fe148e9499dd52172457328ab7") {
+    if ($[0] !== "fb85fbb0f8fd64cfc5f961c5ebee6fb36b7aee365bedf3f96ffd8a6d12b3096d") {
         for(let $i = 0; $i < 5; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "6c1d5573968bb9a614c5ac5582c93c0fb089f1fe148e9499dd52172457328ab7";
+        $[0] = "fb85fbb0f8fd64cfc5f961c5ebee6fb36b7aee365bedf3f96ffd8a6d12b3096d";
     }
     const [count, setCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     let t0;

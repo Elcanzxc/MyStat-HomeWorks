@@ -4,16 +4,13 @@ import LikeArticleButton from "@/src/components/LikeArticleButton";
 import ShowComments from "@/src/components/ShowComments";
 import TagBadge from "@/src/components/TagBadge/TagBadge";
 import ToggleButton from "@/src/components/ToggleButton";
+import TagsCloud from "@/src/components/TagsCloud";
 import { articles } from "@/src/utils";
 import Link from "next/link";
 
 export const revalidate = 30;
 
 export default function Home() {
-
-   
-
-
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
@@ -22,6 +19,8 @@ export default function Home() {
           Обновлено: {new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
         </p>
       </div>
+
+      <TagsCloud />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((item) => (
@@ -60,7 +59,7 @@ export default function Home() {
  
     </div>
   );
-}c
+}
 
 // Выбрал ISR , ведь блоги могут увеличиватся( в продакшене), SSG не подходит
 // Через каждый запрос чекать блоги нет смысла , SSR не подходит

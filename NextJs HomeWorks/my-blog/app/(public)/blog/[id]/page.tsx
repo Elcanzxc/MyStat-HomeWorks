@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import TagBadge from "@/src/components/TagBadge/TagBadge";
 import BlogOnline from "./BlogOnline";
 import ShowComments from "@/src/components/ShowComments";
+import AnimatedWidget from "@/src/components/AnimatedWidget";
+import ReadAlso from "@/src/components/ReadAlso";
 
 export async function generateStaticParams() {
   return [{ id: "1" }, { id: "2" }, { id: "3" }];
@@ -62,6 +64,14 @@ export default async function BlogPage({ params,}: {params: Promise<{ id: string
         </Suspense>
              
        <ShowComments/>
+
+
+
+      <div className="mt-12">
+        <AnimatedWidget title="Читали также">
+          <ReadAlso currentId={Number(id)} />
+        </AnimatedWidget>
+      </div>
       </div>
     </div>
   );

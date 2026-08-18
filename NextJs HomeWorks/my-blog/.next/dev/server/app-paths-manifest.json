@@ -1,5 +1,6 @@
 {
-  "/(public)/blog/tags/[tag]/page": "app/(public)/blog/tags/[tag]/page.js",
+  "/(public)/blog/[id]/page": "app/(public)/blog/[id]/page.js",
   "/(public)/page": "app/(public)/page.js",
+  "/api/onlineCount/route": "app/api/onlineCount/route.js",
   "/api/tags/route": "app/api/tags/route.js"
 }

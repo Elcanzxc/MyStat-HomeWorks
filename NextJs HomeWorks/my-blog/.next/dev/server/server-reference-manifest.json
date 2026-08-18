@@ -1,5 +1,18 @@
 {
-  "node": {},
+  "node": {
+    "60fb04c26b86ce25a1b0335ca74f6548b6dcd956a0": {
+      "workers": {
+        "app/(public)/blog/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(public)/blog/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/components/Comments/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "submitComment",
+          "filename": "src/components/Comments/actions.ts"
+        }
+      },
+      "filename": "src/components/Comments/actions.ts",
+      "exportedName": "submitComment"
+    }
+  },
   "edge": {},
   "encryptionKey": "GFOrJEqMjpN3TaV2c18BO3HjIiXGojA+BTKhSRb8+h4="
 }

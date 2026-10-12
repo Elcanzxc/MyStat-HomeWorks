@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete Success
+{% endblock %}
+
+{% block content %}
+<h1>Delete Success</h1>
+
+<p class="page-text">
+    Заметка была успешно удалена из архива.
+</p>
+
+<div class="actions">
+    <a class="action-link" href="{% url 'notes_list' %}">Вернуться к списку заметок</a>
+</div>
+{% endblock %}

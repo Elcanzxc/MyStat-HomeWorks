@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Подтверждение удаления
+{% endblock %}
+
+{% block content %}
+<h1>Удаление заметки</h1>
+
+<div class="delete-warning">
+    <span class="delete-warning-label">Внимание</span>
+    <p>Вы действительно хотите удалить заметку «<strong>{{ note.title }}</strong>»?</p>
+    <p>Это действие необратимо, и данные будут удалены навсегда.</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" class="danger-link">Delete</button>
+        <a class="action-link" href="{% url 'notes_detail' note.id %}">Cancel</a>
+    </div>
+</form>
+{% endblock %}

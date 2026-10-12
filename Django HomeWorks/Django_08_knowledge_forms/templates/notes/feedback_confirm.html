@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Confirm Feedback
+{% endblock %}
+
+{% block content %}
+<h1>Confirm Feedback</h1>
+
+<div class="note-meta-block">
+    <p class="note-meta">
+        <span class="meta-label">Name</span>
+        <span class="meta-badge">{{ feedback_data.name }}</span>
+    </p>
+
+    <p class="note-meta">
+        <span class="meta-label">Email</span>
+        <span class="meta-badge">{{ feedback_data.email }}</span>
+    </p>
+</div>
+
+<div class="note-content">
+    <strong>Message:</strong>
+    <p>{{ feedback_data.message }}</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" name="action" value="confirm">Confirm</button>
+        <a class="action-link" href="{% url 'notes_feedback' %}">Back</a>
+    </div>
+</form>
+{% endblock %}

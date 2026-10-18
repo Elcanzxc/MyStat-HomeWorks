@@ -1,0 +1,14 @@
+{% extends "events/base.html" %}
+
+{% block title %}Удалить событие{% endblock %}
+
+{% block content %}
+    <h1>Удалить событие</h1>
+    <p>Вы действительно хотите удалить событие: <strong>«{{ event.title }}»</strong>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да, удалить</button>
+        <a href="{% url 'events_detail' event_id=event.id %}">Отмена</a>
+    </form>
+{% endblock %}

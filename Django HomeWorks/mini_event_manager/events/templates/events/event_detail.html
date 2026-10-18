@@ -1,0 +1,36 @@
+{% extends "events/base.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ event.title }}</h2>
+    <p>{{ event.description }}</p>
+
+    <p><strong>Категория:</strong> {{ event.category }}</p>
+    <p><strong>Место проведения:</strong> {{ event.location }}</p>
+    <p>
+        <strong>Текущий статус:</strong>
+        {% if event.status == "активное" %}
+            <span class="badge-active">{{ event.status }}</span>
+        {% else %}
+            <span class="badge-closed">{{ event.status }}</span>
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <p>
+        {% if event.status == "активное" %}
+            <form method="post" action="{% url 'events_close' event_id=event.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Закрыть событие</button>
+            </form>
+            |
+        {% else %}
+            <em>Событие уже закрыто</em>
+            |
+        {% endif %}
+        <a href="{% url 'events_delete' event_id=event.id %}">Удалить событие</a> |
+        <a href="{% url 'events_list' %}">Вернуться к списку событий</a>
+    </p>
+{% endblock %}

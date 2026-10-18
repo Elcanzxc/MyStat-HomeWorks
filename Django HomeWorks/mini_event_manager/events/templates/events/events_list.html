@@ -1,0 +1,62 @@
+{% extends "events/base.html" %}
+
+{% block title %}Список событий{% endblock %}
+
+{% block content %}
+    <h1>Список событий</h1>
+
+    <div class="stats-box">
+        <h3>Статистика событий</h3>
+        <p>Всего событий: <strong>{{ total_count }}</strong></p>
+        <p>Активных событий: <strong>{{ active_count }}</strong></p>
+        <p>Закрытых событий: <strong>{{ closed_count }}</strong></p>
+    </div>
+
+    <div class="filters-box">
+        <form method="get" action="{% url 'events_list' %}">
+            <input type="text" name="q" value="{{ q }}" placeholder="Поиск по названию или месту...">
+
+            <select name="category">
+                <option value="">Все категории</option>
+                {% for cat in categories %}
+                    <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="status">
+                <option value="">Все статусы</option>
+                <option value="активное" {% if selected_status == "активное" %}selected{% endif %}>Активное</option>
+                <option value="закрытое" {% if selected_status == "закрытое" %}selected{% endif %}>Закрытое</option>
+            </select>
+
+            <button type="submit">Найти / Фильтровать</button>
+            <a href="{% url 'events_list' %}">Сбросить</a>
+        </form>
+    </div>
+
+    <ul>
+        {% for event in events %}
+            <li>
+                <h2>{{ event.title }}</h2>
+                <p>
+                    <strong>Категория:</strong> {{ event.category }} |
+                    <strong>Место:</strong> {{ event.location }} |
+                    <strong>Статус:</strong>
+                    {% if event.status == "активное" %}
+                        <span class="badge-active">{{ event.status }}</span>
+                    {% else %}
+                        <span class="badge-closed">{{ event.status }}</span>
+                    {% endif %}
+                </p>
+                <a href="{% url 'events_detail' event_id=event.id %}">Подробнее</a>
+            </li>
+            <hr>
+        {% empty %}
+            <li>События не найдены.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>
+        <a href="{% url 'events_create' %}">Создать новое событие</a>
+    </h2>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Наши менторы — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 24px;">
+    <h2>Список менторов платформы</h2>
+    <p style="color: #57606a;">Пользователи, у которых есть проверенные и опубликованные предложения обучения.</p>
+</div>
+
+<div class="grid">
+    {% for mentor in mentors %}
+        <div class="card" style="display: flex; gap: 16px; align-items: center;">
+            <div>
+                {% if mentor.avatar %}
+                    <img src="{{ mentor.avatar.url }}" alt="{{ mentor.username }}" class="avatar">
+                {% else %}
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #0969da; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        {{ mentor.username|slice:":1"|upper }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div style="flex: 1;">
+                <h3 style="margin-bottom: 4px;">
+                    <a href="{% url 'accounts:profile' username=mentor.username %}">{{ mentor.username }}</a>
+                </h3>
+                <div style="font-size: 13px; color: #57606a;">
+                    Рейтинг: <span style="color: #d4a72c; font-weight: bold;">★ {{ mentor.average_rating }}</span>
+                    • {{ mentor.published_offers_count }} навыков
+                </div>
+            </div>
+
+            <div>
+                <a href="{% url 'accounts:profile' username=mentor.username %}" class="btn btn-outline" style="font-size: 13px;">Профиль</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <p style="color: #57606a;">Пока нет зарегистрированных менторов с опубликованными навыками.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

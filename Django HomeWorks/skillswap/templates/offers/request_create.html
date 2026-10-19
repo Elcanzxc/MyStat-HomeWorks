@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Запрос на занятие: {{ offer.title }} — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 550px; margin: 30px auto;" class="card">
+    <h2 style="margin-bottom: 8px;">Запись на занятие</h2>
+    <p style="color: #57606a; margin-bottom: 20px;">
+        Вы отправляете запрос преподавателю <strong>{{ offer.author.username }}</strong> на занятие <strong>«{{ offer.title }}»</strong>.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 16px; display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-primary">Отправить запрос</button>
+            <a href="{% url 'offers:offer_detail' offer_id=offer.id %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

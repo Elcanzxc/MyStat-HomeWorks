@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action }} предложение навыка — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 650px; margin: 30px auto;" class="card">
+    <h2 style="margin-bottom: 20px;">{{ action }} предложение навыка</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-primary">{{ action }}</button>
+            <a href="{% url 'offers:my_offers' %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

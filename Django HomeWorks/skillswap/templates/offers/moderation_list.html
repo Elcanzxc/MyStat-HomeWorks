@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Модерация предложений — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 24px;">
+    <h2>Панель модерации предложений</h2>
+    <p style="color: #57606a;">Список предложений навыков, ожидающих проверки и подтверждения администратором.</p>
+</div>
+
+{% if offers %}
+    <div class="grid">
+        {% for offer in offers %}
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    {% if offer.image %}
+                        <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                    {% endif %}
+
+                    <span class="badge badge-pending">Ожидает модерации</span>
+                    <h3 style="margin: 8px 0;">
+                        <a href="{% url 'offers:offer_detail' offer_id=offer.id %}">{{ offer.title }}</a>
+                    </h3>
+                    <p style="font-size: 13px; color: #57606a; margin-bottom: 6px;">
+                        Категория: {{ offer.category.name }} • Автор: <strong>{{ offer.author.username }}</strong>
+                    </p>
+                    <p style="font-size: 14px; color: #24292f;">
+                        {{ offer.description|truncatewords:25 }}
+                    </p>
+                </div>
+
+                <div style="border-top: 1px solid #d0d7de; padding-top: 14px; margin-top: 14px; display: flex; gap: 8px;">
+                    <form method="post" action="{% url 'offers:moderation_action' offer_id=offer.id action='publish' %}" style="flex: 1;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Одобрить</button>
+                    </form>
+                    <form method="post" action="{% url 'offers:moderation_action' offer_id=offer.id action='reject' %}" style="flex: 1;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" style="width: 100%;">Отклонить</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card" style="text-align: center; padding: 40px;">
+        <p style="color: #57606a;">Все предложения проверены! Новых предложений на модерации нет.</p>
+    </div>
+{% endif %}
+{% endblock %}

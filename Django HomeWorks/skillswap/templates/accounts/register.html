@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 40px auto;" class="card">
+    <h2 style="margin-bottom: 20px;">Регистрация</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Зарегистрироваться</button>
+    </form>
+    <p style="margin-top: 16px; font-size: 14px; text-align: center;">
+        Уже есть аккаунт? <a href="{% url 'accounts:login' %}">Войти</a>
+    </p>
+</div>
+{% endblock %}

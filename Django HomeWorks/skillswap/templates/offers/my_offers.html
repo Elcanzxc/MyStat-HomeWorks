@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Мои предложения — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Мои предложения навыков</h2>
+    <a href="{% url 'offers:offer_create' %}" class="btn btn-primary">+ Создать предложение</a>
+</div>
+
+{% if offers %}
+    <div class="grid">
+        {% for offer in offers %}
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    {% if offer.image %}
+                        <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                    {% endif %}
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 13px; color: #0969da; font-weight: 600;">{{ offer.category.name }}</span>
+                        {% if offer.status == "published" %}
+                            <span class="badge badge-published">Опубликовано</span>
+                        {% elif offer.status == "pending" %}
+                            <span class="badge badge-pending">На модерации</span>
+                        {% elif offer.status == "draft" %}
+                            <span class="badge badge-draft">Черновик</span>
+                        {% elif offer.status == "rejected" %}
+                            <span class="badge badge-rejected">Отклонено</span>
+                        {% endif %}
+                    </div>
+
+                    <h3 style="margin-bottom: 8px;">
+                        <a href="{% url 'offers:offer_detail' offer_id=offer.id %}">{{ offer.title }}</a>
+                    </h3>
+
+                    <p style="font-size: 14px; color: #57606a;">
+                        {{ offer.description|truncatewords:15 }}
+                    </p>
+                </div>
+
+                <div style="border-top: 1px solid #d0d7de; padding-top: 10px; margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px; color: #d4a72c; font-weight: bold;">★ {{ offer.average_rating }}</span>
+                    <div style="display: flex; gap: 6px;">
+                        <a href="{% url 'offers:offer_edit' offer_id=offer.id %}" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;">Изменить</a>
+                        <a href="{% url 'offers:offer_delete' offer_id=offer.id %}" class="btn btn-danger" style="padding: 2px 8px; font-size: 12px;">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card" style="text-align: center; padding: 40px;">
+        <p style="color: #57606a; margin-bottom: 16px;">Вы пока не создали ни одного предложения.</p>
+        <a href="{% url 'offers:offer_create' %}" class="btn btn-primary">Создать первое предложение</a>
+    </div>
+{% endif %}
+{% endblock %}

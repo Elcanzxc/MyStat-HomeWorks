@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль {{ profile_user.username }} — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+    <div>
+        {% if profile_user.avatar %}
+            <img src="{{ profile_user.avatar.url }}" alt="{{ profile_user.username }}" class="avatar-lg">
+        {% else %}
+            <div style="width: 96px; height: 96px; border-radius: 50%; background-color: #0969da; color: white; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: bold;">
+                {{ profile_user.username|slice:":1"|upper }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="flex: 1;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h2>
+                {{ profile_user.username }}
+                {% if profile_user.role == "superadmin" %}
+                    <span class="badge" style="background:#8250df; color:white;">Супер Админ</span>
+                {% elif profile_user.role == "admin" %}
+                    <span class="badge" style="background:#0969da; color:white;">Админ</span>
+                {% endif %}
+                {% if profile_user.is_banned %}
+                    <span class="badge badge-rejected">Заблокирован</span>
+                {% endif %}
+            </h2>
+
+            {% if user == profile_user %}
+                <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline">Редактировать профиль</a>
+            {% endif %}
+        </div>
+
+        <p style="margin: 12px 0; color: #57606a;">
+            {{ profile_user.bio|default:"Пользователь пока не добавил описание о себе." }}
+        </p>
+
+        <div style="display: flex; gap: 24px; margin-top: 16px; border-top: 1px solid #d0d7de; padding-top: 14px;">
+            <div>
+                <strong style="font-size: 18px; color: #0969da;">★ {{ profile_user.average_rating }}</strong>
+                <div style="font-size: 13px; color: #57606a;">Средний рейтинг</div>
+            </div>
+            <div>
+                <strong style="font-size: 18px;">{{ profile_user.published_offers_count }}</strong>
+                <div style="font-size: 13px; color: #57606a;">Опубликовано навыков</div>
+            </div>
+            <div>
+                <strong style="font-size: 18px;">{{ profile_user.completed_lessons_count }}</strong>
+                <div style="font-size: 13px; color: #57606a;">Завершено занятий</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 style="margin-bottom: 16px;">Предложения навыков от {{ profile_user.username }}</h3>
+{% if published_offers %}
+    <div class="grid">
+        {% for offer in published_offers %}
+            <div class="card">
+                {% if offer.image %}
+                    <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                {% endif %}
+                <h4><a href="{% url 'offers:offer_detail' offer_id=offer.id %}">{{ offer.title }}</a></h4>
+                <p style="font-size: 13px; color: #57606a; margin: 6px 0;">
+                    {{ offer.category.name }} • {{ offer.level }} • {{ offer.format }}
+                </p>
+                <div style="font-size: 14px; margin-top: 8px;">
+                    ★ {{ offer.average_rating }} ({{ offer.reviews_count }} отзывов)
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p style="color: #57606a;">У этого пользователя пока нет опубликованных предложений.</p>
+{% endif %}
+
+<h3 style="margin: 30px 0 16px 0;">Отзывы об обучении у {{ profile_user.username }}</h3>
+{% if reviews %}
+    <div>
+        {% for review in reviews %}
+            <div class="card" style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <strong>{{ review.student.username }}</strong>
+                    <span style="color: #d4a72c; font-weight: bold;">★ {{ review.rating }}/5</span>
+                </div>
+                <div style="font-size: 13px; color: #57606a; margin-bottom: 6px;">
+                    По занятию: <a href="{% url 'offers:offer_detail' offer_id=review.offer.id %}">{{ review.offer.title }}</a>
+                    • {{ review.created_at|date:"d M Y" }}
+                </div>
+                <p>{{ review.comment }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p style="color: #57606a;">Об этом пользователе пока нет отзывов.</p>
+{% endif %}
+{% endblock %}

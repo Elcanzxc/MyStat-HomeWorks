@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Удалить категорию — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 40px auto;" class="card">
+    <h2 style="color: #cf222e; margin-bottom: 16px;">Удаление категории</h2>
+    <p>Вы уверены, что хотите удалить категорию: <strong>«{{ category.name }}»</strong>?</p>
+    <p style="color: #57606a; font-size: 13px; margin-top: 6px;">Все предложения в этой категории также будут удалены.</p>
+
+    <form method="post" style="margin-top: 24px; display: flex; gap: 10px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+        <a href="{% url 'offers:categories_manage' %}" class="btn btn-outline">Отмена</a>
+    </form>
+</div>
+{% endblock %}

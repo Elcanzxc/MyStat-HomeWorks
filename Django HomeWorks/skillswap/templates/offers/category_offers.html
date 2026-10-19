@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 24px;">
+    <h2>Категория: {{ category.name }}</h2>
+    <p style="color: #57606a;">Все опубликованные предложения в данной категории.</p>
+</div>
+
+{% if offers %}
+    <div class="grid">
+        {% for offer in offers %}
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    {% if offer.image %}
+                        <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                    {% endif %}
+                    <h3><a href="{% url 'offers:offer_detail' offer_id=offer.id %}">{{ offer.title }}</a></h3>
+                    <p style="font-size: 14px; color: #57606a; margin: 8px 0;">
+                        {{ offer.description|truncatewords:20 }}
+                    </p>
+                </div>
+                <div style="border-top: 1px solid #d0d7de; padding-top: 10px; margin-top: 10px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                        <span>Автор: <a href="{% url 'accounts:profile' username=offer.author.username %}"><strong>{{ offer.author.username }}</strong></a></span>
+                        <span style="color: #d4a72c; font-weight: bold;">★ {{ offer.average_rating }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card" style="text-align: center; padding: 40px;">
+        <p style="color: #57606a;">В этой категории пока нет опубликованных предложений.</p>
+    </div>
+{% endif %}
+{% endblock %}

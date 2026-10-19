@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Удалить отзыв — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 40px auto;" class="card">
+    <h2 style="color: #cf222e; margin-bottom: 16px;">Удаление отзыва</h2>
+    <p>Вы действительно хотите удалить отзыв к предложению <strong>«{{ review.offer.title }}»</strong>?</p>
+    <p style="margin-top: 8px; color: #57606a; font-style: italic;">"{{ review.comment }}"</p>
+
+    <form method="post" style="margin-top: 24px; display: flex; gap: 10px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+        <a href="{% url 'offers:offer_detail' offer_id=review.offer.id %}" class="btn btn-outline">Отмена</a>
+    </form>
+</div>
+{% endblock %}

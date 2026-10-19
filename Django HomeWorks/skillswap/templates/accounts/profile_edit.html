@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование профиля — SkillSwap{% endblock %}
+
+{% block content %}
+<div style="max-width: 550px; margin: 30px auto;" class="card">
+    <h2 style="margin-bottom: 20px;">Редактирование профиля</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 16px; display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'accounts:profile' username=user.username %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Мои запросы на занятия — SkillSwap{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">Мои запросы на занятия</h2>
+
+<div class="card">
+    <h3>Входящие запросы (к вашим навыкам)</h3>
+    {% if received_requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Студент</th>
+                    <th>Навык</th>
+                    <th>Сообщение</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in received_requests %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'accounts:profile' username=req.student.username %}">
+                                <strong>{{ req.student.username }}</strong>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'offers:offer_detail' offer_id=req.offer.id %}">{{ req.offer.title }}</a>
+                        </td>
+                        <td>{{ req.message|default:"—" }}</td>
+                        <td>{{ req.created_at|date:"d.m.Y" }}</td>
+                        <td>
+                            {% if req.status == "pending" %}
+                                <span class="badge badge-pending">Ожидает</span>
+                            {% elif req.status == "accepted" %}
+                                <span class="badge badge-accepted">Принят</span>
+                            {% elif req.status == "rejected" %}
+                                <span class="badge badge-rejected">Отклонен</span>
+                            {% elif req.status == "completed" %}
+                                <span class="badge badge-completed">Завершен</span>
+                            {% elif req.status == "cancelled" %}
+                                <span class="badge badge-cancelled">Отменен</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px;">
+                                {% if req.status == "pending" %}
+                                    <form method="post" action="{% url 'offers:request_action' request_id=req.id action='accept' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary" style="padding: 2px 8px; font-size: 12px;">Принять</button>
+                                    </form>
+                                    <form method="post" action="{% url 'offers:request_action' request_id=req.id action='reject' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;">Отклонить</button>
+                                    </form>
+                                {% elif req.status == "accepted" %}
+                                    <form method="post" action="{% url 'offers:request_action' request_id=req.id action='complete' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;">Завершить занятие</button>
+                                    </form>
+                                {% else %}
+                                    <span style="font-size: 12px; color: #57606a;">—</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #57606a; margin-top: 10px;">Входящих запросов пока нет.</p>
+    {% endif %}
+</div>
+
+<div class="card" style="margin-top: 24px;">
+    <h3>Исходящие запросы (отправленные вами)</h3>
+    {% if sent_requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Навык</th>
+                    <th>Преподаватель</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in sent_requests %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'offers:offer_detail' offer_id=req.offer.id %}">{{ req.offer.title }}</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'accounts:profile' username=req.offer.author.username %}">
+                                <strong>{{ req.offer.author.username }}</strong>
+                            </a>
+                        </td>
+                        <td>{{ req.created_at|date:"d.m.Y" }}</td>
+                        <td>
+                            {% if req.status == "pending" %}
+                                <span class="badge badge-pending">Ожидает ответа</span>
+                            {% elif req.status == "accepted" %}
+                                <span class="badge badge-accepted">Принят</span>
+                            {% elif req.status == "rejected" %}
+                                <span class="badge badge-rejected">Отклонен</span>
+                            {% elif req.status == "completed" %}
+                                <span class="badge badge-completed">Завершен</span>
+                            {% elif req.status == "cancelled" %}
+                                <span class="badge badge-cancelled">Отменен</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px;">
+                                {% if req.status == "pending" %}
+                                    <form method="post" action="{% url 'offers:request_action' request_id=req.id action='cancel' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;">Отменить</button>
+                                    </form>
+                                {% elif req.status == "accepted" %}
+                                    <form method="post" action="{% url 'offers:request_action' request_id=req.id action='complete' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;">Завершить</button>
+                                    </form>
+                                {% elif req.status == "completed" %}
+                                    {% if req.review %}
+                                        <span style="font-size: 12px; color: #1a7f37;">Отзыв оставлен ★ {{ req.review.rating }}</span>
+                                    {% else %}
+                                        <a href="{% url 'offers:review_create' request_id=req.id %}" class="btn btn-primary" style="padding: 2px 8px; font-size: 12px;">Оценить занятие</a>
+                                    {% endif %}
+                                {% else %}
+                                    <span style="font-size: 12px; color: #57606a;">—</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #57606a; margin-top: 10px;">Вы еще не отправляли запросов на занятия.</p>
+    {% endif %}
+</div>
+{% endblock %}

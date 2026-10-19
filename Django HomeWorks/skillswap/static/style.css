@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #24292f;
+    background-color: #f6f8fa;
+    line-height: 1.5;
+    padding-bottom: 50px;
+}
+
+header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #d0d7de;
+    padding: 12px 24px;
+    margin-bottom: 24px;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0969da;
+    text-decoration: none;
+}
+
+nav a {
+    color: #57606a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 12px;
+}
+
+nav a:hover {
+    color: #0969da;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(31,35,40,0.04);
+}
+
+.messages {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.message.success {
+    background-color: #dafbe1;
+    color: #1a7f37;
+    border: 1px solid #4ac26b;
+}
+
+.message.error {
+    background-color: #ffebe9;
+    color: #cf222e;
+    border: 1px solid #ff8182;
+}
+
+.message.warning {
+    background-color: #fff8c5;
+    color: #9a6700;
+    border: 1px solid #d4a72c;
+}
+
+.message.info {
+    background-color: #ddf4ff;
+    color: #0969da;
+    border: 1px solid #54aeff;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.badge-published { background-color: #dafbe1; color: #1a7f37; }
+.badge-pending { background-color: #fff8c5; color: #9a6700; }
+.badge-rejected { background-color: #ffebe9; color: #cf222e; }
+.badge-draft { background-color: #eaeef2; color: #57606a; }
+
+.badge-accepted { background-color: #dafbe1; color: #1a7f37; }
+.badge-completed { background-color: #ddf4ff; color: #0969da; }
+.badge-cancelled { background-color: #eaeef2; color: #57606a; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.btn-primary { background-color: #0969da; color: #ffffff; }
+.btn-primary:hover { background-color: #0860ca; }
+
+.btn-danger { background-color: #cf222e; color: #ffffff; }
+.btn-danger:hover { background-color: #a40e26; }
+
+.btn-outline {
+    background-color: transparent;
+    color: #24292f;
+    border: 1px solid #d0d7de;
+}
+.btn-outline:hover { background-color: #f3f4f6; }
+
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #d0d7de;
+    font-size: 14px;
+}
+
+th { background-color: #f6f8fa; font-weight: 600; }
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+.avatar-lg {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.offer-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background-color: #eaeef2;
+}
+
+.banner {
+    background: linear-gradient(135deg, #0969da 0%, #1f883d 100%);
+    color: white;
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.banner h1 { font-size: 26px; margin-bottom: 8px; }
+.banner p { opacity: 0.9; }
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #d0d7de;
+    margin-bottom: 24px;
+}
+
+.filter-bar input, .filter-bar select {
+    margin: 0;
+    width: auto;
+    min-width: 150px;
+}

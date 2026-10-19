@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Категории навыков — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 24px;">
+    <h2>Категории навыков</h2>
+    <p style="color: #57606a;">Выберите интересующую сферу для просмотра доступных занятий.</p>
+</div>
+
+<div class="grid">
+    {% for cat in categories %}
+        <div class="card" style="text-align: center; padding: 24px;">
+            <h3 style="margin-bottom: 8px;">
+                <a href="{% url 'offers:category_offers' slug=cat.slug %}">{{ cat.name }}</a>
+            </h3>
+            <p style="color: #57606a; font-size: 14px;">
+                Предложений: <strong>{{ cat.published_count }}</strong>
+            </p>
+            <div style="margin-top: 14px;">
+                <a href="{% url 'offers:category_offers' slug=cat.slug %}" class="btn btn-outline" style="font-size: 13px;">Смотреть навыки</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

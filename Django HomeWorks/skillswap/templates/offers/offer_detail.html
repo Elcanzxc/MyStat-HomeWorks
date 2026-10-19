@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}{{ offer.title }} — SkillSwap{% endblock %}
+
+{% block content %}
+<div class="card" style="border-left: 4px solid #0969da;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <span class="badge" style="background:#ddf4ff; color:#0969da; margin-bottom: 8px;">{{ offer.category.name }}</span>
+            {% if offer.status == "published" %}
+                <span class="badge badge-published">Опубликовано</span>
+            {% elif offer.status == "pending" %}
+                <span class="badge badge-pending">На модерации</span>
+            {% elif offer.status == "draft" %}
+                <span class="badge badge-draft">Черновик</span>
+            {% elif offer.status == "rejected" %}
+                <span class="badge badge-rejected">Отклонено</span>
+            {% endif %}
+
+            <h1 style="margin: 8px 0;">{{ offer.title }}</h1>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center;">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'offers:favorite_toggle' offer_id=offer.id %}">
+                    {% csrf_token %}
+                    {% if is_favorited %}
+                        <button type="submit" class="btn btn-outline" style="color: #cf222e; border-color: #cf222e;">♥ В избранном</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-outline">♡ В избранное</button>
+                    {% endif %}
+                </form>
+
+                {% if user == offer.author or user.is_any_admin %}
+                    <a href="{% url 'offers:offer_edit' offer_id=offer.id %}" class="btn btn-outline">Редактировать</a>
+                    <a href="{% url 'offers:offer_delete' offer_id=offer.id %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid #d0d7de; font-size: 14px;">
+        <div>
+            <span style="color: #57606a;">Автор:</span>
+            <a href="{% url 'accounts:profile' username=offer.author.username %}"><strong>{{ offer.author.username }}</strong></a>
+        </div>
+        <div>
+            <span style="color: #57606a;">Дата создания:</span>
+            <strong>{{ offer.created_at|date:"d.m.Y H:i" }}</strong>
+        </div>
+        <div>
+            <span style="color: #57606a;">Уровень:</span>
+            <strong>{{ offer.level }}</strong>
+        </div>
+        <div>
+            <span style="color: #57606a;">Формат:</span>
+            <strong>{{ offer.format }}</strong>
+        </div>
+        <div>
+            <span style="color: #57606a;">Длительность:</span>
+            <strong>{{ offer.duration }}</strong>
+        </div>
+        <div>
+            <span style="color: #57606a;">Средний рейтинг:</span>
+            <strong style="color: #d4a72c;">★ {{ offer.average_rating }}</strong> ({{ offer.reviews_count }} оценок)
+        </div>
+        <div>
+            <span style="color: #57606a;">Завершенных занятий:</span>
+            <strong>{{ offer.completed_lessons_count }}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    {% if offer.image %}
+        <div style="margin-bottom: 20px;">
+            <img src="{{ offer.image.url }}" alt="{{ offer.title }}" style="max-height: 400px; width: 100%; object-fit: cover; border-radius: 8px;">
+        </div>
+    {% endif %}
+
+    <h3 style="margin-bottom: 12px;">Описание занятия</h3>
+    <div style="font-size: 15px; line-height: 1.7; white-space: pre-line; color: #24292f;">
+        {{ offer.description }}
+    </div>
+
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #d0d7de;">
+        {% if user.is_authenticated %}
+            {% if user == offer.author %}
+                <p style="color: #57606a;"><em>Вы являетесь автором этого предложения.</em></p>
+            {% elif user.is_banned %}
+                <p style="color: #cf222e;"><em>Ваш аккаунт заблокирован. Вы не можете отправлять запросы на обучение.</em></p>
+            {% elif has_active_request %}
+                <span class="btn btn-outline" style="cursor: default;">Запрос на занятие уже отправлен</span>
+                <a href="{% url 'offers:my_requests' %}" style="margin-left: 10px; font-size: 14px;">Перейти к моим запросам</a>
+            {% else %}
+                <a href="{% url 'offers:request_create' offer_id=offer.id %}" class="btn btn-primary" style="padding: 10px 24px; font-size: 16px;">
+                    Записаться на занятие
+                </a>
+            {% endif %}
+        {% else %}
+            <p>
+                <a href="{% url 'accounts:login' %}">Войдите</a> или <a href="{% url 'accounts:register' %}">зарегистрируйтесь</a>, чтобы записаться на это занятие.
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<h3 style="margin: 30px 0 16px 0;">Отзывы студентов ({{ offer.reviews_count }})</h3>
+{% if offer.reviews.all %}
+    <div>
+        {% for review in offer.reviews.all %}
+            <div class="card" style="margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>{{ review.student.username }}</strong>
+                        <span style="font-size: 13px; color: #57606a; margin-left: 8px;">{{ review.created_at|date:"d M Y" }}</span>
+                    </div>
+                    <span style="color: #d4a72c; font-weight: bold;">★ {{ review.rating }}/5</span>
+                </div>
+                <p style="margin-top: 10px; font-size: 14px;">{{ review.comment }}</p>
+
+                {% if user.is_authenticated %}
+                    {% if user == review.student or user.is_any_admin %}
+                        <div style="margin-top: 12px; font-size: 13px;">
+                            {% if user == review.student %}
+                                <a href="{% url 'offers:review_edit' review_id=review.id %}" style="margin-right: 10px;">Редактировать</a>
+                            {% endif %}
+                            <a href="{% url 'offers:review_delete' review_id=review.id %}" style="color: #cf222e;">Удалить отзыв</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card" style="text-align: center; padding: 24px;">
+        <p style="color: #57606a;">Пока нет отзывов по этому навыку.</p>
+    </div>
+{% endif %}
+{% endblock %}

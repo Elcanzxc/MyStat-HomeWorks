@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Вход — Expense Tracker{% endblock %}
+
+{% block content %}
+<div style="max-width: 440px; margin: 40px auto;" class="card">
+    <h2 style="margin-bottom: 20px;">Вход в систему</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Войти</button>
+    </form>
+    <p style="margin-top: 16px; font-size: 14px; text-align: center;">
+        Нет аккаунта? <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+    </p>
+</div>
+{% endblock %}

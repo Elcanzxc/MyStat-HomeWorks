@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление расхода — Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="confirm-container">
+    <div class="card confirm-card">
+        <div class="confirm-icon">⚠️</div>
+        <h1 class="confirm-title">Удаление расхода</h1>
+        <p class="confirm-text">
+            Вы уверены, что хотите удалить расход <strong>«{{ expense.title }}»</strong> на сумму <strong>{{ expense.amount }} ₽</strong> от {{ expense.expense_date|date:"d.m.Y" }}?
+        </p>
+        <p class="confirm-warning">Это действие необратимо.</p>
+
+        <form method="post" class="confirm-actions">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Да, удалить</button>
+            <a href="{% url 'expenses:detail' expense.pk %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

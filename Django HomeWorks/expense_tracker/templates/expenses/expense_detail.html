@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ expense.title }} — Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <div class="card detail-card">
+        <div class="detail-header">
+            <div>
+                <a href="{% url 'expenses:list' %}" class="back-link">&larr; Назад к списку</a>
+                <h1 class="detail-title">{{ expense.title }}</h1>
+                <div class="detail-meta">
+                    <span class="badge badge-category">{{ expense.get_category_display }}</span>
+                    <span class="badge badge-payment">{{ expense.get_payment_method_display }}</span>
+                </div>
+            </div>
+            <div class="detail-amount">{{ expense.amount }} ₽</div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">Дата расхода</span>
+                <span class="detail-value">{{ expense.expense_date|date:"d.m.Y" }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Дата добавления</span>
+                <span class="detail-value">{{ expense.created_at|date:"d.m.Y H:i" }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Способ оплаты</span>
+                <span class="detail-value">{{ expense.get_payment_method_display }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Категория</span>
+                <span class="detail-value">{{ expense.get_category_display }}</span>
+            </div>
+        </div>
+
+        <div class="detail-comment-section">
+            <span class="detail-label">Комментарий</span>
+            <div class="detail-comment">
+                {% if expense.comment %}
+                    {{ expense.comment|linebreaks }}
+                {% else %}
+                    <span class="text-muted">Комментарий не указан</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="detail-actions">
+            <a href="{% url 'expenses:edit' expense.pk %}" class="btn btn-primary">Редактировать</a>
+            <a href="{% url 'expenses:delete' expense.pk %}" class="btn btn-danger">Удалить</a>
+            <a href="{% url 'expenses:list' %}" class="btn btn-secondary">К списку</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
